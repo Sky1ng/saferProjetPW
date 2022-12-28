@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20221220093926 extends AbstractMigration
+final class Version20221228164219 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,16 +20,12 @@ final class Version20221220093926 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE bien ADD categorie_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE bien ADD CONSTRAINT FK_45EDC386BCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id)');
-        $this->addSql('CREATE INDEX IDX_45EDC386BCF5E72D ON bien (categorie_id)');
+        $this->addSql('ALTER TABLE categorie ADD nom VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE bien DROP FOREIGN KEY FK_45EDC386BCF5E72D');
-        $this->addSql('DROP INDEX IDX_45EDC386BCF5E72D ON bien');
-        $this->addSql('ALTER TABLE bien DROP categorie_id');
+        $this->addSql('ALTER TABLE categorie DROP nom');
     }
 }

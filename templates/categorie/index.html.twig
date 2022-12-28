@@ -10,7 +10,6 @@
             <tr>
                 <th>Id</th>
                 <th>Type</th>
-                <th>Nom</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,7 +18,6 @@
             <tr>
                 <td>{{ categorie.id }}</td>
                 <td>{{ categorie.type }}</td>
-                <td>{{ categorie.nom }}</td>
                 <td>
                     <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}">show</a>
                     <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
@@ -27,7 +25,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

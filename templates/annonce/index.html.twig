@@ -3,25 +3,26 @@
 {% block title %}Hello AnnonceController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    {% for bien in biens %}
-        <td>{{ bien.id }}</td>
-        <td>{{ bien.venteLocation }}</td>
-        <td>{{ bien.surface }}</td>
-        <td>{{ bien.type }}</td>
-        <td>{{ bien.prix }}</td>
-        <td>{{ bien.categorie }}</td>
-    {% endfor %}
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/elouan/GitHub/saferProjetPW/src/Controller/AnnonceController.php'|file_link(0) }}">src/Controller/AnnonceController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/elouan/GitHub/saferProjetPW/templates/annonce/index.html.twig'|file_link(0) }}">templates/annonce/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="example-wrapper">
+        <h1>Hello {{ controller_name }}! ✅</h1>
+        {% for bien in biens %}
+            <td>{{ bien.id }}</td>
+            <td>{{ bien.reference }}</td>
+            <td>{{ bien.titre }}</td>
+            <td>{{ bien.surface }}</td>
+            <td>{{ bien.type }}</td>
+            <td>{{ bien.prix }}</td>
+            <br>
+        {% endfor %}
+        This friendly message is coming from:
+        <ul>
+            <li>Your controller at <code><a href="{{ '/Users/elouan/GitHub/saferProjetPW/src/Controller/AnnonceController.php'|file_link(0) }}">src/Controller/AnnonceController.php</a></code></li>
+            <li>Your template at <code><a href="{{ '/Users/elouan/GitHub/saferProjetPW/templates/annonce/index.html.twig'|file_link(0) }}">templates/annonce/index.html.twig</a></code></li>
+        </ul>
+    </div>
 {% endblock %}

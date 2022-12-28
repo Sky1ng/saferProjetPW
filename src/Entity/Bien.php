@@ -14,52 +14,54 @@ class Bien
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $vente_location = null;
-
-    #[ORM\Column]
-    private ?int $surface = null;
+    private ?string $reference = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    private ?string $titre = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?int $localisation = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $surface = null;
 
     #[ORM\Column]
     private ?int $prix = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
     #[ORM\ManyToOne(inversedBy: 'biens')]
-    private ?Categorie $categorie = null;
+    private ?Categorie $id_categorie = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $titre=null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $description=null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $codePostal=null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $reference=null;
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getReference(): ?string
     {
         return $this->reference;
     }
-    
+
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
-    
+
         return $this;
     }
-    
-    public function getCodePostal(): ?string
+
+    public function getTitre(): ?string
     {
-        return $this->codePostal;
+        return $this->titre;
     }
 
-    public function setCodePostal(string $codePostal): self
+    public function setTitre(string $titre): self
     {
-        $this->codePostal = $codePostal;
+        $this->titre = $titre;
 
         return $this;
     }
@@ -76,43 +78,26 @@ class Bien
         return $this;
     }
 
-    public function getId(): ?int
+    public function getLocalisation(): ?int
     {
-        return $this->id;
+        return $this->localisation;
     }
 
-    public function getVenteLocation(): ?string
+    public function setLocalisation(int $localisation): self
     {
-        return $this->vente_location;
-    }
-
-    public function setVenteLocation(string $vente_location): self
-    {
-        $this->vente_location = $vente_location;
+        $this->localisation = $localisation;
 
         return $this;
     }
 
-    public function getSurface(): ?int
+    public function getSurface(): ?string
     {
         return $this->surface;
     }
 
-    public function setSurface(int $surface): self
+    public function setSurface(string $surface): self
     {
         $this->surface = $surface;
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
 
         return $this;
     }
@@ -129,29 +114,27 @@ class Bien
         return $this;
     }
 
-    public function getCategorie(): ?Categorie
+    public function getType(): ?string
     {
-        return $this->categorie;
+        return $this->type;
     }
 
-    public function setCategorie(?Categorie $categorie): self
+    public function setType(string $type): self
     {
-        $this->categorie = $categorie;
+        $this->type = $type;
 
         return $this;
     }
 
-    public function getTitre(): string
+    public function getIdCategorie(): ?Categorie
     {
-        return $this->titre;
+        return $this->id_categorie;
     }
 
-    public function setTitre(string $titre): self
+    public function setIdCategorie(?Categorie $id_categorie): self
     {
-        $this->titre = $titre;
+        $this->id_categorie = $id_categorie;
 
         return $this;
     }
-
-
 }

@@ -9,10 +9,13 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Vente_location</th>
+                <th>Reference</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Localisation</th>
                 <th>Surface</th>
-                <th>Type</th>
                 <th>Prix</th>
+                <th>Type</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,10 +23,13 @@
         {% for bien in biens %}
             <tr>
                 <td>{{ bien.id }}</td>
-                <td>{{ bien.venteLocation }}</td>
+                <td>{{ bien.reference }}</td>
+                <td>{{ bien.titre }}</td>
+                <td>{{ bien.description }}</td>
+                <td>{{ bien.localisation }}</td>
                 <td>{{ bien.surface }}</td>
-                <td>{{ bien.type }}</td>
                 <td>{{ bien.prix }}</td>
+                <td>{{ bien.type }}</td>
                 <td>
                     <a href="{{ path('app_bien_show', {'id': bien.id}) }}">show</a>
                     <a href="{{ path('app_bien_edit', {'id': bien.id}) }}">edit</a>
@@ -31,7 +37,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="9">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -3,10 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Bien;
-use App\Entity\Annonce;
-
 use App\Entity\Categorie;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +19,7 @@ class AnnonceController extends AbstractController
         #check si la catégorie exsite, si elle existe on renvoie un tableau avec tous les biens correspondant a ce type de bien
         #SELECT * FROM `bien` WHERE categorie_id = (SELECT id FROM `categorie` where nom = "Terrain Agricole");
         $bienRepository = $entityManager->getRepository(Bien::class);
-        $bien = $bienRepository->findBy(['categorie' => $categoriebis->getId()]);
+        $bien = $bienRepository->findBy(['id_categorie' => $categoriebis->getId()]);
 
 
 
