@@ -54,11 +54,12 @@ class CreateCategorieCommand extends Command implements ContainerAwareInterface
         $entityManager = $this->getContainer()->get('doctrine')->getManager();
 
         //Supprimer le contenu de la table categorie
-        $queryBuilder = $entityManager->createQueryBuilder();
-        $query = $entityManager->createQuery('DELETE FROM App:Categorie');
-        $query->execute();
+        if (!$input->getOption('dry-run')) {
+            $query = $entityManager->createQuery('DELETE FROM App:Categorie');
+            $query->execute();
+        }
 
-        // Parcourez les catégories et créez un objet Categorie pour chaque entrée
+        // Parc --ourez les catégories et créez un objet Categorie pour chaque entrée
         foreach ($categories as $categoryData) {
             $category = new Categorie();
             $category->setType($categoryData['type']);

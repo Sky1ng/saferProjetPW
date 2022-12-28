@@ -28,6 +28,40 @@ class Bien
     #[ORM\ManyToOne(inversedBy: 'biens')]
     private ?Categorie $categorie = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $titre=null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $description=null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $codePostal=null;
+
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(string $codePostal): self
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,4 +126,18 @@ class Bien
 
         return $this;
     }
+
+    public function getTitre(): string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): self
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+
 }
