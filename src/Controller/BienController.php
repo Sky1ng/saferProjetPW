@@ -10,7 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/bien')]
+#TODO: Mettre à jour les routes comme ca il y a que l'admin qui modifie ca et pas les utilisateurs
+#[Route('/admin/bien')]
 class BienController extends AbstractController
 {
     #[Route('/', name: 'app_bien_index', methods: ['GET'])]
