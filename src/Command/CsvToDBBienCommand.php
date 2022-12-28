@@ -49,6 +49,7 @@ class CsvToDBBienCommand extends Command implements ContainerAwareInterface
         while (($data = fgetcsv($handle, 1000, ';')) !== false) {
             // Crée une instance de l'entité Bien
             $bien = new Bien();
+            $bien->setReference($data[0]);
             $bien->setTitre($data[1]);
             $bien->setDescription($data[2]);
             $bien->setCodePostal($data[3]);

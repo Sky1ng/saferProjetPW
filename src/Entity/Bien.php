@@ -37,7 +37,21 @@ class Bien
     #[ORM\Column(length: 255)]
     private ?string $codePostal=null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $reference=null;
 
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+    
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
+    
+        return $this;
+    }
+    
     public function getCodePostal(): ?string
     {
         return $this->codePostal;
