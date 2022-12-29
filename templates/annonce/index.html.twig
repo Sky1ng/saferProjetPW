@@ -11,6 +11,7 @@
     <div class="example-wrapper">
         <h1>Hello {{ controller_name }}! ✅</h1>
         {% for bien in biens %}
+            <td><a href="{{ path('app_admin_new', {id: bien.id}) }}"> Ajouter le bien au favoris</a></td>
             <td>{{ bien.id }}</td>
             <td>{{ bien.reference }}</td>
             <td>{{ bien.titre }}</td>
@@ -19,6 +20,8 @@
             <td>{{ bien.prix }}</td>
             <br>
         {% endfor %}
+
+
         This friendly message is coming from:
         <ul>
             <li>Your controller at <code><a href="{{ '/Users/elouan/GitHub/saferProjetPW/src/Controller/AnnonceController.php'|file_link(0) }}">src/Controller/AnnonceController.php</a></code></li>
