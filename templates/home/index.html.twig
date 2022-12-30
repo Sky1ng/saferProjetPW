@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('style/home.css') }}" />
+  <link rel="stylesheet" href="{{ asset('style/bien.css') }}" />
+{% endblock %}
+
+{% block title %}
+  Safer
+{% endblock %}
+
+{% block body %}
+  <style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font:
+    18px/1.5 sans-serif; } .example-wrapper code { background: #F5F5F5; padding:
+    2px 6px; }
+  </style>
+
+  <div class="example-wrapper">
+    <h1>
+      Hello {{ controller_name }}! ✅
+    </h1>This friendly message is coming from:<ul>
+      <li>
+        Your controller at <code><a href="{{ 'C:/Users/Yann/Documents/saferProjetPW/src/Controller/HomeController.php'|file_link(
+              0
+            ) }}">
+            src/Controller/HomeController.php
+          </a></code>
+      </li>
+      <li>
+        Your template at <code><a href="{{ 'C:/Users/Yann/Documents/saferProjetPW/templates/home/index.html.twig'|file_link(
+              0
+            ) }}">
+            templates/home/index.html.twig
+          </a></code>
+      </li>
+    </ul>
+  </div>
+
+  <h2>
+    Notre sélection de biens
+  </h2>
+  <div class="nosBiens">
+    {% for bien in biens %}
+      <div class="bien">
+        <img src="/images/photo/{{ bien.reference }}.jpg"
+          alt="Photo du bien présenté"
+          onerror="this.src='/images/photo/noPhoto.jpg'"
+          class="bienImage" />
+        <div class="bienInfos">
+          <h3 class="bienTitre">
+            {{ bien.titre }}
+          </h3>
+          <p class="bienPrix">
+            {{ bien.prix }} €
+          </p>
+          <p class="bienCodePostal">
+            {{ bien.localisation }}
+          </p>
+          <div>
+            <img src="/images/logo/{{ bien.idCategorie }}.png"
+              onerror="this.src='/images/photo/noPhoto.jpg'"
+              alt="{{ bien.idCategorie }}"
+              width="21"
+              height="21"
+              class="bienTypeImage" />
+            <p class="bienType">
+              {{ bien.type }}
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <section>
+    <div>
+      <h2>
+        L'entreprise SAFER
+      </h2>
+      <img src="/images/logo.png" />
+    </div>
+    <p>
+      SAFER (Société d'Aménagement Foncier et d'Etablissement Rural) est une
+      entreprise française qui a pour mission d'aménager, d'entretenir et de
+      gérer le foncier rural en France. Elle est une société anonyme dotée de
+      l'autorité de police administrative, agissant en France sous l'égide du
+      ministère de l'Agriculture, de l'Alimentation, de la Pêche et des Affaires
+      Rurales. SAFER s'adresse aux agriculteurs et aux propriétaires fonciers
+      qui souhaitent vendre, acheter, louer ou échanger du foncier rural. Elle
+      leur offre également des conseils et un accompagnement dans leurs
+      démarches afin de faciliter l'accès au foncier et de favoriser la
+      transmission et la modernisation de l'exploitation agricole. SAFER est
+      présente sur l'ensemble du territoire français.
+    </p>
+  </section>
+{% endblock %}
