@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FavorisSent index{% endblock %}
+
+{% block body %}
+    <h1>FavorisSent index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Biens</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for favoris_sent in favoris_sents %}
+            <tr>
+                <td>{{ favoris_sent.id }}</td>
+                <td>{{ favoris_sent.email }}</td>
+                <td>{{ favoris_sent.biens ? favoris_sent.biens|join(', ') : '' }}</td>
+                <td>{{ favoris_sent.date ? favoris_sent.date|date('Y-m-d') : '' }}</td>
+                <!--
+                <td>
+                    <a href="{{ path('app_favoris_sent_show', {'id': favoris_sent.id}) }}">show</a>
+                    <a href="{{ path('app_favoris_sent_edit', {'id': favoris_sent.id}) }}">edit</a>
+                </td>
+                -->
+                <td>
+                    <a href="{{ path('app_favoris_sent_show', {'id': favoris_sent.id}) }}">show</a>
+                    <a href="{{ path('app_favoris_sent_delete', {'id': favoris_sent.id}) }}">delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_favoris_sent_new') }}">Create new</a>
+{% endblock %}

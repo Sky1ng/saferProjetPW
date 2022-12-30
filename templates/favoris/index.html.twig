@@ -24,6 +24,19 @@
         <td><a href="{{ path('app_admin_removeById', {id: bien.id}) }}"> Supprimer le bien des favoris</a></td>
 
         <br>
+        <br>
     {% endfor %}
+    <br>
+    <br>
+    <a href="{{ path('app_admin_remove') }}"><button>Retirer tous les favoris</button> </a>
+
+
+    <br>
+    <br>
+    <form action="{{ path('app_admin_mail') }}" method="post">
+        <input type="email" name="email" id="email" placeholder="votre mail">
+
+        <button type="submit">Envoyer les favoris par mail</button>
+    </form>
 
 {% endblock %}
