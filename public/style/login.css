@@ -1,0 +1,55 @@
+@font-face {
+    font-family: 'Reem Kufi';
+    src: url('../fonts/ReemKufi-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2{
+    font-family: 'Reem Kufi';
+    font-size: 3vw;
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    font-family: "Reem Kufi";
+}
+form input{
+    border-radius: 15px;
+    border-width: 1px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 2vw;
+    width: 45vw;
+    height: 5vh;
+    max-height: 70px;
+    max-width: 600px;
+}
+form label{
+    font-size: 2vw;
+    color: black;
+    margin-top: 5vh;
+    margin-bottom: 2vh;
+}
+
+form.login button{
+    background: #669900;
+    color: white;
+    border-width: 0;
+    border-radius: 15px;
+
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 250px;
+    height: 70px;
+    text-align: center;
+    vertical-align: auto;
+    font-family: "Reem Kufi";
+    font-size: 2.5vw;
+    text-decoration: none;
+    margin-top: 10vh;
+}

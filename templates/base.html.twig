@@ -1,60 +1,65 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>
-			{% block title %}Twig Problem !
-			{% endblock %}
-		</title>
-		<link
-		rel="icon" href="{{ asset('images/logo.png') }}" type="image/png">
-		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-		<link rel="stylesheet" href="{{ asset('style/header.css') }}">
-		<link rel="stylesheet" href="{{ asset('style/main.css') }}">
-		{% block stylesheets %}
-			{{ encore_entry_link_tags('app') }}
-		{% endblock %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>
+      {% block title %}
+        Twig Problem !
+      {% endblock %}
+    </title>
+    <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png" />
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    <link rel="stylesheet" href="{{ asset('style/header.css') }}" />
+    <link rel="stylesheet" href="{{ asset('style/main.css') }}" />
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
-		{% endblock %}
-	</head>
-	<body>
-		<header>
-			<a href="{{ path('app_home') }}">
-				<img src="{{ asset('images/logoComplet.svg') }}" alt="logo" width="521" height="221">
-			</a>
-			<nav>
-				<ul>
-					<li class="buttonClassic">
-						<a href="{{ path('app_home') }}">Nos Biens</a>
-					</li>
-					{% if app.user %}
-						<!-- L'utilisateur est connecté -->
-						{% if "ROLE_ADMIN" in app.user.roles %}
-							<!-- L'utilisateur est un administrateur -->
-							<li class="buttonAdmin">
-								<a href="{{ path('app_home') }}">Votre espace</a>
-							</li>
-						{% else %}
-							<li class="buttonClassic">
-								<a href="{{ path('app_home') }}">Vos Favoris</a>
-							</li>
-							<!-- L'utilisateur n'est pas un administrateur -->
-						{% endif %}
-					{% endif %}
-				</ul>
-			</nav>
-			{% if app.user %}
-				<a href="{{ path('app_home') }}"> Menu burger du profil a faire</a>
-			{% else %}
-					<a href="{{ path('app_home') }}" class="buttonConnexion">Connexion</a>
-			{% endif %}
-		</header>
-	</body>
-	<body>
-		{% block body %}
-		
-		{% endblock %}
-	</body>
+    {% block javascripts %}
+      {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+  </head>
+  <body>
+    <header>
+      <a href="{{ path('app_home') }}">
+        <img src="{{ asset('images/logoComplet.svg') }}"
+          alt="logo"
+          width="521"
+          height="221" />
+      </a>
+      <nav>
+        <ul>
+          <li class="buttonClassic">
+            <a href="{{ path('app_home') }}">Nos Biens</a>
+          </li>
+          {% if app.user %}
+            <!-- L'utilisateur est connecté -->
+            {% if 'ROLE_ADMIN' in app.user.roles %}
+              <!-- L'utilisateur est un administrateur -->
+              <li class="buttonAdmin">
+                <a href="{{ path('app_home') }}">Votre espace</a>
+              </li>
+            {% else %}
+              <li class="buttonClassic">
+                <a href="{{ path('app_home') }}">Vos Favoris</a>
+              </li>
+              <!-- L'utilisateur n'est pas un administrateur -->
+            {% endif %}
+          {% endif %}
+        </ul>
+      </nav>
+      {% if app.user %}
+        <a href="{{ path('app_home') }}">Menu burger du profil a faire</a>
+      {% else %}
+        <form action="{{ path('app_login') }}" method="post">
+          <button type="submit" class="button">Se connecter</button>
+        </form>
+      {% endif %}
+    </header>
+  </body>
+  <body>
+    {% block body %}
+
+    {% endblock %}
+  </body>
 </html>
