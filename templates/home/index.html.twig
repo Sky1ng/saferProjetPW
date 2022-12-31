@@ -48,6 +48,11 @@
           alt="Photo du bien présenté"
           onerror="this.src='/images/photo/noPhoto.jpg'"
           class="bienImage" />
+        <a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
+          <img src="/images/logo/favicon.png"
+            alt="Bouton favoris"
+            class="favorite-button__image" />
+        </a>
         <div class="bienInfos">
           <h3 class="bienTitre">
             {{ bien.titre }}
