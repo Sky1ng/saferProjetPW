@@ -37,6 +37,11 @@ class Bien
     #[ORM\ManyToOne(inversedBy: 'biens')]
     private ?Categorie $id_categorie = null;
 
+    public function __toString(): string
+    {
+       return $this->titre;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
