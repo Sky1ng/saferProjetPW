@@ -67,6 +67,15 @@ class FavorisController extends AbstractController
         return $this->redirectToRoute('app_favoris_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    #[Route('/addInBase', name: 'app_admin_addINBase', methods: ['GET', 'POST'])]
+    public function addInDataBase(string $id,SessionInterface $session): Response
+    {
+        $tab = $session->get('id');
+
+     //TODO: AJOUTER AU COMPTE DE L'UTILISATEUR CONNECTE LES FAVORIS + LE BOUTON
+        return $this->redirectToRoute('app_favoris_index', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('/mail', name: 'app_admin_mail', methods: ['GET', 'POST'])]
     public function sendFavoris(SessionInterface $session,EntityManagerInterface $em,Request $request):Response
     {

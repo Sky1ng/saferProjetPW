@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AnnonceController extends AbstractController
 {
+
     #[Route('/annonce/{categorie}', name: 'app_annonce')]
     public function index(string $categorie, EntityManagerInterface $entityManager): Response
     {
@@ -20,6 +21,7 @@ class AnnonceController extends AbstractController
         #SELECT * FROM `bien` WHERE categorie_id = (SELECT id FROM `categorie` where nom = "Terrain Agricole");
         $bienRepository = $entityManager->getRepository(Bien::class);
         $bien = $bienRepository->findBy(['id_categorie' => $categoriebis->getId()]);
+
 
 
 
