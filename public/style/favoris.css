@@ -1,0 +1,70 @@
+@font-face {
+    font-family: 'Reem Kufi';
+    src: url('../fonts/ReemKufi-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2 {
+    font-family: 'Reem Kufi';
+    font-size: 2.5em;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.buttons form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.buttons form input{
+    font-family: 'Reem Kufi';
+    font-size: 1.5em;
+    border-radius: 15px;
+    height: 2em;
+    width: 40vw;
+    border-width: 1px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding-left: 15px;
+
+    margin-top: 5vh;
+}
+
+.buttonRemoveAll {
+    background: #ff0000;
+    color: white;
+    border-radius: 10px;
+    border-width: 0;
+
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 2em;
+    text-align: center;
+    vertical-align: auto;
+    font-family: "Reem Kufi";
+
+    margin-top: 5vh;
+}
+
+.buttonSend {
+    background: #669900;
+    color: white;
+    border-radius: 10px;
+    border-width: 0;
+
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 2em;
+    text-align: center;
+    vertical-align: auto;
+    font-family: "Reem Kufi";
+    
+    margin-top: 5vh;
+}
