@@ -43,6 +43,7 @@
   </h2>
   <div class="nosBiens">
     {% for bien in biens %}
+    <a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
       <div class="bien">
         <img src="/images/photo/{{ bien.reference }}.jpg"
           alt="Photo du bien présenté"
@@ -71,11 +72,12 @@
               height="21"
               class="bienTypeImage" />
             <p class="bienType">
-              {{ bien.type }}
+              {{ bien.idCategorie }}
             </p>
           </div>
         </div>
       </div>
+    </a>
     {% endfor %}
   </div>
   <section>
