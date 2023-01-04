@@ -1,53 +1,50 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-  {{ parent() }}
-  <link rel="stylesheet" href="{{ asset('style/bien.css') }}" />
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('style/annonce.css') }}"/>
+	<link rel="stylesheet" href="{{ asset('style/bien.css') }}"/>
 {% endblock %}
 
-{% block title %}Hello AnnonceController!{% endblock %}
+{% block title %}Hello AnnonceController!
+{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    </style>
-
-
-    <div class="nosBiens">
-    {% for bien in biens %}
-      <div class="bien">
-        <img src="/images/photo/{{ bien.reference }}.jpg"
-          alt="Photo du bien présenté"
-          onerror="this.src='/images/photo/noPhoto.jpg'"
-          class="bienImage" />
-        <a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
-          <img src="/images/logo/favicon.png"
-            alt="Bouton favoris"
-            class="favorite-button__image" />
-        </a>
-        <div class="bienInfos">
-          <h3 class="bienTitre">
-            {{ bien.titre }}
-          </h3>
-          <p class="bienPrix">
-            {{ bien.prix }} €
-          </p>
-          <p class="bienCodePostal">
-            {{ bien.localisation }}
-          </p>
-          <div>
-            <img src="/images/logo/{{ bien.idCategorie }}.png"
-              onerror="this.src='/images/photo/noPhoto.jpg'"
-              alt="{{ bien.idCategorie }}"
-              width="21"
-              height="21"
-              class="bienTypeImage" />
-            <p class="bienType">
-              {{ bien.type }}
-            </p>
-          </div>
-        </div>
-      </div>
-    {% endfor %}
+	<h2>Les biens disponibles</h2>
+	<div class="nosBiens">
+		{% for bien in biens %}
+			<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
+				<div class="bien">
+					<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+					<a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
+						<img src="/images/logo/favicon.png" alt="Bouton favoris" class="favorite-button__image"/>
+					</a>
+					<div class="bienInfos">
+						<h3 class="bienTitre">
+							{{ bien.titre }}
+						</h3>
+						<p class="bienPrix">
+							{{ bien.prix }}
+							€
+						</p>
+						<p class="bienCodePostal">
+							{{ bien.localisation }}
+						</p>
+						<div>
+							<img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
+							<p class="bienType">
+								{{ bien.idCategorie }}
+							</p>
+						</div>
+					</div>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
+	<h2>
+		Vous ne trouvez pas le bien parfait à votre goût ?
+	</h2>
+	<form action="{{ path('app_contact') }}" method="post">
+		<button type="submit" class="buttonContact">Me contacter dès l'arrivée d'un bien</button>
+	</form>
 {% endblock %}
