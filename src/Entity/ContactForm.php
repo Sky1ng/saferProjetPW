@@ -17,7 +17,7 @@ class ContactForm
     private ?string $email = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $prix = null;
+    private ?string $prix = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $localisation = null;
@@ -28,7 +28,7 @@ class ContactForm
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $categorie = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $keyword = null;
 
     public function getId(): ?int
@@ -48,12 +48,12 @@ class ContactForm
         return $this;
     }
 
-    public function getPrix(): ?int
+    public function getPrix(): ?String
     {
         return $this->prix;
     }
 
-    public function setPrix(?int $prix): self
+    public function setPrix(?String $prix): self
     {
         $this->prix = $prix;
 

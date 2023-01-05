@@ -137,22 +137,26 @@ class ContactFormType extends AbstractType
             ->add('prix', ChoiceType::class, [
                 'choices' => $priceRanges,
                 'placeholder' => 'Prix',
+                'required'=>false
             ])
             ->add('localisation', ChoiceType::class, [
                 'choices' => $departments,
                 'placeholder' => 'Département',
+                'required'=>false
             ])
             ->add('surface', ChoiceType::class, [
                 'choices' => $surfaceRanges,
                 'placeholder' => 'Surface',
+                'required'=>false
             ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'nom',
                 'placeholder' => 'Catégorie',
+                'required'=>false
             ])
-            ->add('keyword', TextareaType::class, ['attr' => ['placeholder' => 'Mots clés']])
-            ->add('save', SubmitType::class,['attr' => ['placeholder' => 'Valider']]);
+            ->add('keyword', TextareaType::class, ['attr' => ['placeholder' => 'Mots clés'],'required'=>false])
+            ->add('Envoyer', SubmitType::class,['attr' => ['placeholder' => 'Valider','label' => 'Valider']]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
