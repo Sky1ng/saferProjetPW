@@ -1,0 +1,48 @@
+{# templates/user/edit.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Modifier mes informations</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form.email) }}
+    <div class="form-group">
+      <!--  <label for="password">Mot de passe</label>-->
+        <div class="input-group">
+            {{ form_widget(form.password, { 'type': 'password' }) }}
+
+        </div>
+    </div>
+    <button type="submit">Enregistrer</button>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var passwordFields = document.querySelectorAll('input[type="password"]');
+
+            passwordFields.forEach(function(passwordField) {
+                var parent = passwordField.parentElement;
+
+                // Création du bouton "Afficher le mot de passe"
+                var showPasswordButton = document.createElement('button');
+                showPasswordButton.innerHTML = 'Afficher le mot de passe';
+                showPasswordButton.type = 'button';
+                showPasswordButton.addEventListener('click', function() {
+                    if (passwordField.type === 'password') {
+                        passwordField.type = 'text';
+                        showPasswordButton.innerHTML = 'Masquer le mot de passe';
+                    } else {
+                        passwordField.type = 'password';
+                        showPasswordButton.innerHTML = 'Afficher le mot de passe';
+                    }
+                });
+
+                // Ajout du bouton "Afficher le mot de passe" à côté du champ de formulaire "Mot de passe"
+                parent.appendChild(showPasswordButton);
+            });
+        });
+    </script>
+{% endblock %}

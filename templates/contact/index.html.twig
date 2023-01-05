@@ -8,7 +8,12 @@
   Hello ContactController!
 {% endblock %}
 
+
+
 {% block body %}
+  {% for message in app.flashes('success') %}
+    <div class="alert alert-success">{{ message }}</div>
+  {% endfor %}
   <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font:
     18px/1.5 sans-serif; }
@@ -25,7 +30,9 @@
   <h2>
     Mes critères
   </h2>
+
   <div class="contactForm">
+    {{ form_start(form) }}
     {{ form_widget(form.prix) }}
     {{ form_widget(form.localisation) }}
     {{ form_widget(form.surface) }}
@@ -33,7 +40,8 @@
     {{ form_widget(form.keyword) }}
     <div>
       {{ form_widget(form.email) }}
-      {{ form_widget(form.save) }}
+
+{{ form_end(form) }}
     </div>
   </div>
 {% endblock %}
