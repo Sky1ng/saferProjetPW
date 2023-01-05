@@ -24,6 +24,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_ }
+            
+    App\Twig\MenuExtension:
+        tags: ['twig.extension']
+        arguments: ['@App\Service\MenuCategorie']
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
