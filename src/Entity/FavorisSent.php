@@ -23,6 +23,9 @@ class FavorisSent
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'favoris')]
+    private ?Admin $admin = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class FavorisSent
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getAdmin(): ?Admin
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(?Admin $admin): self
+    {
+        $this->admin = $admin;
 
         return $this;
     }

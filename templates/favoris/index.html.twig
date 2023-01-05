@@ -54,6 +54,36 @@
 				</div>
 			</a>
 		{% endfor %}
+
+		<h2>Les favoris </h2>
+		{% for bien in favoris %}
+			<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
+				<div class="bien">
+					<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+					<a href="{{ path('app_admin_removeById', {id: bien.id}) }}" class="favorite-button">
+						<img src="/images/logo/croix.png" alt="Bouton favoris" class="favorite-button__image"/>
+					</a>
+					<div class="bienInfos">
+						<h3 class="bienTitre">
+							{{ bien.titre }}
+						</h3>
+						<p class="bienPrix">
+							{{ bien.prix }}
+							€
+						</p>
+						<p class="bienCodePostal">
+							{{ bien.localisation }}
+						</p>
+						<div>
+							<img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
+							<p class="bienType">
+								{{ bien.idCategorie }}
+							</p>
+						</div>
+					</div>
+				</div>
+			</a>
+		{% endfor %}
 	</div>
 	<div class="buttons">
 		<form action="{{ path('app_admin_remove') }}" method="post">
