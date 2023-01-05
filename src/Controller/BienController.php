@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Bien;
 use App\Form\BienType;
 use App\Repository\BienRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,7 @@ class BienController extends AbstractController
     }
 
     #[Route('/new', name: 'app_bien_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, BienRepository $bienRepository): Response
+    public function new(Request $request, BienRepository $bienRepository, EntityManagerInterface $em): Response
     {
         $bien = new Bien();
         $form = $this->createForm(BienType::class, $bien);
@@ -31,6 +32,48 @@ class BienController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $bienRepository->save($bien, true);
+
+            //TODO: faire le mail automatique si le bien est validé
+            $contact = $em->getRepository(Contact::class)->findAll();
+            for ($i = 0; $i < count($contact); $i++) {
+                $prix = $contact[$i]->getPrix();
+                $surface = $contact[$i]->getSurface();
+                $localisation = $contact[$i]->getLocalisation();
+
+                if ($prix === '1000' && $bien <= 1000) {
+
+                } elseif ($prix === '1000-5000') {
+
+                } elseif ($prix === '5000-10000') {
+                    $resultsP = $em->getRepository(Bien::class)->createQueryBuilder('b')
+                        ->where('b.prix > :prix')
+                        ->andwhere('b.prix < :prix2')
+                        ->setParameter('prix', 5000)
+                        ->setParameter('prix2', 10000)
+                        ->getQuery()
+                        ->getResult();
+                } elseif ($prix === '10000+') {
+                    $resultsP = $em->getRepository(Bien::class)->createQueryBuilder('b')
+                        ->where('b.prix > :prix')
+                        ->setParameter('prix', 10000)
+                        ->getQuery()
+                        ->getResult();
+                } else {
+                    $resultsP = $em->getRepository(Bien::class)->findAll();
+
+                }
+
+                $resultsL = $em->getRepository(Bien::class)->createQueryBuilder('b')
+                    ->where('b.localisation LIKE :localisation')
+                    ->setParameter('localisation', $localisation . '%')
+                    ->getQuery()
+                    ->getResult();
+                if($resultsP === null){
+                    $resultsP = $em->getRepository(Bien::class)->findAll();
+                }
+            }
+
+
 
             return $this->redirectToRoute('app_bien_index', [], Response::HTTP_SEE_OTHER);
         }
