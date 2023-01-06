@@ -154,6 +154,9 @@ class SearchController extends AbstractController
             }
 
             $results = array_intersect($resultsP, $resultsL, $resultsS, $resultC);
+            if($results === []){
+                $this->addFlash('error', 'Aucun résultat trouvé');
+            }
 
 
             return $this->render('search/index.html.twig', [
@@ -174,4 +177,37 @@ class SearchController extends AbstractController
 
         ]);
     }
+
+
+    #[Route('/search/data', name: 'app_search_data')]
+    public function recherche(Request $request, EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(QuickSearchType::class);
+        $form->handleRequest($request);
+
+        $form2 = $this->createForm(ContactFormType::class);
+        $form2->handleRequest($request);
+
+
+            $query = $request->request->get('recherche');
+
+            $results = $em->getRepository(Bien::class)->createQueryBuilder('b')
+                ->where('b.titre LIKE :query')
+                ->setParameter('query', '%' . $query . '%')
+                ->getQuery()
+                ->getResult();
+
+            if($results === []){
+               $this->addFlash('error', 'Aucun résultat trouvé');
+            }
+
+            return $this->render('search/index.html.twig', [
+                'controller_name' => 'SearchController',
+                'form' => $form->createView(),
+                'form2' => $form2->createView(),
+                'results' => $results,
+            ]);
+        }
+
+
 }

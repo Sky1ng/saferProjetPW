@@ -3,19 +3,72 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div>
+
     <h1>Modifier mes informations</h1>
-
     {{ form_start(form) }}
-    {{ form_widget(form.email) }}
-    <div class="form-group">
-      <!--  <label for="password">Mot de passe</label>-->
-        <div class="input-group">
-            {{ form_widget(form.password, { 'type': 'password' }) }}
 
-        </div>
+    <h3>Email </h3>
+    <div class="form-group col-sm-10 w-25">
+                  <div >
+
+          {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Mon placeholder'},'type':'email' }) }}        <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value="email@example.com">
+                  </div>
+      </div>
     </div>
-    <button type="submit">Enregistrer</button>
+    <div class="form-group col-sm-10 w-25">
+
+      <!--  <label for="password">Mot de passe</label>-->
+            {{ form_widget(form.password, { 'attr': {'class': 'form-control','id':'test'},'type':'password' }) }}        <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value="email@example.com">
+
+
+    </div>
+    <br>
+    <div>
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </div>
     {{ form_end(form) }}
+    </div>
+    <div style="height: 250px">
+
+    </div>
+    <div>
+        <table class="table table-hover">
+            <thead>
+
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Vos informations</th>
+                <th scope="col">Les biens qui correspondent à chaque favoris</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {%  for favori in favoris %}
+                <tr class="table-active">
+                    <th scope="row">Favoris</th>
+                    <td>{{ favori.id }} </td>
+                    <td>
+                        {% for f in favori.biens %}
+                            [{{ f }}]
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <form method="post" action="{{ path('app_favoris_sent_delete', {'id': favori.id}) }}" onsubmit="return confirm('Êtes vous sur de vouloir supprimer ce favoris ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ favori.id) }}">
+                            <button class="btn">Supprimer</button>
+                        </form>
+
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

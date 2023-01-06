@@ -146,7 +146,7 @@ class FavorisController extends AbstractController
         }
         $em->persist($favorisAdmin);
         $em->flush();
-
+        $session->set('favoris', []);
         return $this->redirectToRoute('app_favoris_index', [], Response::HTTP_SEE_OTHER);
     }
 

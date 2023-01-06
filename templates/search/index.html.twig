@@ -9,26 +9,37 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+   <h1> Recherche efficace </h1>
+    <br>
+    <h2>Recherche par mot</h2>
+    <p>Ce type de recherche permet de trouver des biens en fonction de votre mot</p>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/elouanbarbier/GitHub/saferProjetPW/src/Controller/SearchController.php'|file_link(0) }}">src/Controller/SearchController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/elouanbarbier/GitHub/saferProjetPW/templates/search/index.html.twig'|file_link(0) }}">templates/search/index.html.twig</a></code></li>
-    </ul>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
-
+    <br>
+    <br>
+    <br>
+    <h2>Recherche par critère</h2>
+    {{ form_start(form2) }}
+    {{ form_widget(form2) }}
+    {{ form_end(form2) }}
+    <br>
+    <br>
+    <br>
+    <h2>Resultat : </h2>
+    <br>
+    {% for message in app.flashes('error') %}
+    <div class="alert alert-dismissible alert-primary">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Oups !</strong> {{ message }}</a>.
+    </div>
+{% endfor %}
     {% for bien in results %}
 
                 <h5 class="card-title">{{ bien.titre }}</h5>
         {% endfor %}
 
-    <br>
-    <br>
-    <br>
-    {{ form_start(form2) }}
-    {{ form_widget(form2) }}
-    {{ form_end(form2) }}
+
+
 {% endblock %}

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('admin/favoris')]
+#[Route('/favoris')]
 class FavorisSentController extends AbstractController
 {
     #[Route('/', name: 'app_favoris_sent_index', methods: ['GET'])]
@@ -79,6 +79,6 @@ class FavorisSentController extends AbstractController
             $favorisSentRepository->remove($favorisSent, true);
         }
 
-        return $this->redirectToRoute('app_favoris_sent_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_compte', [], Response::HTTP_SEE_OTHER);
     }
 }
