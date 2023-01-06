@@ -18,7 +18,7 @@ class ContactFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $priceRanges = [
-            'A partir de 1000€' => '1000',
+            'En dessous de 1000€' => '1000',
             'Entre 1000€ et 5000€' => '1000-5000',
             'Entre 5000€ et 10000€' => '5000-10000',
             'Plus de 10000€' => '10000+',

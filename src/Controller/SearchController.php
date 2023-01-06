@@ -36,6 +36,9 @@ class SearchController extends AbstractController
                 ->getQuery()
                 ->getResult();
 
+            if($results === []){
+                $this->addFlash('error', 'Aucun résultat trouvé');
+            }
 
             return $this->render('search/index.html.twig', [
                 'controller_name' => 'SearchController',
