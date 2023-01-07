@@ -7,16 +7,62 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
-
+{% for message in app.flashes('success') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Réussi !</strong> {{ message }}</a>.
+    </div>
+{% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>Erreur !</strong> {{ message }}</a>.
+        </div>
+    {% endfor %}
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title" style="text-align: center">Votre profil</h1>
+            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center">Compte utilisateur</h6>
+            <p class="card-text">Si vous avez besoin d'éditer votre mot de passe :</p>
+            <a href="{{ path('app_compte_edit') }}" class="card-link">Éditer vos informations</a>
+            <table class="table table-hover">
+                <thead>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/elouanbarbier/GitHub/saferProjetPW/src/Controller/CompteController.php'|file_link(0) }}">src/Controller/CompteController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/elouanbarbier/GitHub/saferProjetPW/templates/compte/index.html.twig'|file_link(0) }}">templates/compte/index.html.twig</a></code></li>
-    </ul>
+                <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Vos informations</th>
+                    <th scope="col">Les biens qui correspondent à chaque favoris</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="table-active">
+                    <th scope="row">Email</th>
+                    <td>{{ user.email }}</td>
+
+                </tr>
+                {%  for roles in role %}
+                    <tr class="table-active">
+                        <th scope="row">Role</th>
+                        <td>{{ roles }}</td>
+                    </tr>
+                {% endfor %}
+                {%  for favori in favoris %}
+                    <tr class="table-active">
+                        <th scope="row">Favoris</th>
+                        <td>{{ favori.id }} </td>
+                        <td>
+                       {% for f in favori.biens %}
+                             [{{ f }}]
+                        {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-    user.id = {{ user.id }}
 
 {% endblock %}

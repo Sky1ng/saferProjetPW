@@ -23,9 +23,13 @@
 		}
 	</style>
 	<h2>
-		Vos favoris
+		Vos favoris de votre session
 	</h2>
+	<br>
 	<div class="nosBiens">
+		{% if biens == [] %}
+			<h3>Vous n'avez ajouter encore aucun favoris durant votre navigation</h3>
+		{% else %}
 		{% for bien in biens %}
 			<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
 				<div class="bien">
@@ -54,6 +58,8 @@
 				</div>
 			</a>
 		{% endfor %}
+
+
 	</div>
 	<div class="buttons">
 		<form action="{{ path('app_admin_remove') }}" method="post">
@@ -64,6 +70,48 @@
 
 			<button type="submit" class="buttonSend">Envoyer les favoris par mail</button>
 		</form>
+		{% endif %}
 	</div>
 
+	<div style="height: 250px"></div>
+	<hr>
+	<h2>Les favoris précédement enregistrés </h2>
+	<br>
+<figcaption class="blockquote-footer">
+	Si vous souhaitez supprimer les anciens favoris veuillez vous rendre dans votre compte <a href="{{ path('app_compte') }}"> ici</a>
+</figcaption>
+	<br>
+	<br>
+	<div class="nosBiens">
+		{% if favoris == [] %}
+		<h3>Vous vous n'êtes pas envoyer de favoris</h3>
+		{% else %}
+		{% for bien in favoris %}
+			<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
+				<div class="bien">
+					<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+
+					<div class="bienInfos">
+						<h3 class="bienTitre">
+							{{ bien.titre }}
+						</h3>
+						<p class="bienPrix">
+							{{ bien.prix }}
+							€
+						</p>
+						<p class="bienCodePostal">
+							{{ bien.localisation }}
+						</p>
+						<div>
+							<img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
+							<p class="bienType">
+								{{ bien.idCategorie }}
+							</p>
+						</div>
+					</div>
+				</div>
+			</a>
+		{% endfor %}
+		{% endif %}
+	</div>
 {% endblock %}

@@ -7,7 +7,10 @@
 
 {% block body %}
     {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>Erreur !</strong> <a href="#" class="alert-link">{{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
     {% endif %}
 
     <h2> Se connecter </h2>

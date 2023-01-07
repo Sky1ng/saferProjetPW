@@ -36,4 +36,13 @@ class BienDisponibleController extends AbstractController
             'bien' => $bien[0]
         ]);
     }
+    #[Route('/bien', name: 'app_bien_all')]
+    public function indexbis(EntityManagerInterface $em): Response
+    {
+
+        $bien = $em->getRepository(Bien::class)->findAll();
+        return $this->render('bien_disponible/all.html.twig', [
+            'biens' => $bien
+        ]);
+    }
 }

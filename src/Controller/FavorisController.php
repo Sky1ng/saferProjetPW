@@ -10,6 +10,7 @@ use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,14 +23,25 @@ class FavorisController extends AbstractController
 
 
     #[Route('/', name: 'app_favoris_index', methods: ['GET'])]
-    public function index(SessionInterface $session,EntityManagerInterface $em): Response
+    public function index(Security $security,SessionInterface $session,EntityManagerInterface $em): Response
     {
 
         $biens = $em->getRepository(Bien::class)->findBy(['id' => $session->get('favoris')]);
 
 
+
+        $favoris = [];
+        $idbiens = [];
+        if($security->getUser() != null){
+            $idFavoris = $em->getRepository(FavorisSent::class)->findBy(['admin' => $security->getUser()->getId()]);
+            for($i = 0; $i < count($idFavoris); $i++){
+                $idbiens = array_merge($idbiens,$idFavoris[$i]->getBiens());
+            }
+            $favoris = $em->getRepository(Bien::class)->findBy(['id' => $idbiens]);
+        }
         return $this->render('favoris/index.html.twig', [
-            'biens' => $biens
+            'biens' => $biens,
+            'favoris' => $favoris
         ]);
     }
 
@@ -48,7 +60,7 @@ class FavorisController extends AbstractController
     #[Route('/remove', name: 'app_admin_remove', methods: ['GET', 'POST'])]
     public function removeFavoris(SessionInterface $session): Response
     {
-        $session->clear();
+        $session->set('favoris', []);
 
         return $this->redirectToRoute('app_favoris_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -77,8 +89,12 @@ class FavorisController extends AbstractController
     }
 
     #[Route('/mail', name: 'app_admin_mail', methods: ['GET', 'POST'])]
-    public function sendFavoris(SessionInterface $session,EntityManagerInterface $em,Request $request):Response
+    public function sendFavoris(Security $security, SessionInterface $session,EntityManagerInterface $em,Request $request):Response
     {
+        if($session->get('favoris') == null){
+            return $this->redirectToRoute('app_favoris_index', [], Response::HTTP_SEE_OTHER);
+
+        }
         $tab = $session->get('favoris');
         $biens = $em->getRepository(Bien::class)->findBy(['id' => $session->get('favoris')]);
 
@@ -125,12 +141,13 @@ class FavorisController extends AbstractController
         $favorisAdmin->setEmail($request->request->get('email'));
         $favorisAdmin->setBiens($tab);
         $favorisAdmin->setDate(new \DateTime());
+        if($security->getUser() != null){
+            $favorisAdmin->setAdmin($security->getUser());
+        }
         $em->persist($favorisAdmin);
         $em->flush();
-
-        return $this->render('favoris/favorismail.html.twig', [
-
-        ]);
+        $session->set('favoris', []);
+        return $this->redirectToRoute('app_favoris_index', [], Response::HTTP_SEE_OTHER);
     }
 
 }
