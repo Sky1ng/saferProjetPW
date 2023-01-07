@@ -7,11 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cette adresse email')]
 class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -34,10 +35,24 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'admin', targetEntity: FavorisSent::class)]
     private Collection $favoris;
 
+    #[ORM\Column]
+    private ?bool $usable = null;
+
     public function __construct()
     {
+
         $this->favoris = new ArrayCollection();
     }
+
+    public function hasRole(){
+        if($this->roles == 'ROLE_ADMIN'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 
     public function getId(): ?int
     {
@@ -138,4 +153,17 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function isUsable(): ?bool
+    {
+        return $this->usable;
+    }
+
+    public function setUsable(bool $usable): self
+    {
+        $this->usable = $usable;
+
+        return $this;
+    }
+
 }

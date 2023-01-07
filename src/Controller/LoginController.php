@@ -19,6 +19,7 @@ class LoginController extends AbstractController
         if($lastUsername === null){
             $lastUsername = "";
         }
+        
 
         return $this->render('login/index.html.twig', [
             'last_username' => $lastUsername,

@@ -47,6 +47,7 @@ class CompteController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', 'Votre compte a bien été mis à jour');
+            $user->setUsable(true);
 
             return $this->redirectToRoute('app_compte');
         }

@@ -8,6 +8,16 @@
     <h1>S'enregistrer</h1>
 
     {{ form_start(registrationForm) }}
+        {% if registrationForm.vars.errors|length > 0 %}
+            <div class="alert alert-danger">
+                {{ form_errors(form.username) }}
+                {{ form_errors(form.email) }}
+                {{ form_errors(form.password) }}
+                {{ form_errors(form.passwordConfirm) }}
+                {{ form_errors(form.invalid_message) }}
+
+            </div>
+        {% endif %}
     <div class="form-group">
         <div class="form-floating mb-3">
             {{ form_row(registrationForm.email,{'attr': {'class': 'form-control', 'placeholder': 'name@example.com'},'type':'email'}) }}
@@ -15,7 +25,8 @@
 
         </div>
         <div class="form-floating">
-            {{ form_widget(registrationForm.plainPassword, { 'attr': {'class': 'form-control','id':'test'},'type':'password' }) }}               <label for="floatingPassword">Password</label>
+            {{ form_row(registrationForm.password,{'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'},'type':'password'}) }}
+
         </div>
     </div>
 <br>

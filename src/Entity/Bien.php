@@ -13,7 +13,7 @@ class Bien
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     private ?string $reference = null;
 
     #[ORM\Column(length: 255)]
@@ -36,6 +36,9 @@ class Bien
 
     #[ORM\ManyToOne(inversedBy: 'biens')]
     private ?Categorie $id_categorie = null;
+
+    #[ORM\Column(length: 500, nullable: true)]
+    private ?string $image = null;
 
     public function __toString(): string
     {
@@ -139,6 +142,18 @@ class Bien
     public function setIdCategorie(?Categorie $id_categorie): self
     {
         $this->id_categorie = $id_categorie;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
