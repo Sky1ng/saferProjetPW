@@ -17,4 +17,8 @@
         <li>Your template at <code><a href="{{ '/Users/elouanbarbier/GitHub/saferProjetPW/templates/reset_password/index.html.twig'|file_link(0) }}">templates/reset_password/index.html.twig</a></code></li>
     </ul>
 </div>
+   {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">Envoyer</button>
+    {{ form_end(form) }}
 {% endblock %}

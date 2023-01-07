@@ -35,8 +35,7 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'admin', targetEntity: FavorisSent::class)]
     private Collection $favoris;
 
-    #[ORM\Column]
-    private ?bool $usable = null;
+
 
     public function __construct()
     {
@@ -150,18 +149,6 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
                 $favori->setAdmin(null);
             }
         }
-
-        return $this;
-    }
-
-    public function isUsable(): ?bool
-    {
-        return $this->usable;
-    }
-
-    public function setUsable(bool $usable): self
-    {
-        $this->usable = $usable;
 
         return $this;
     }

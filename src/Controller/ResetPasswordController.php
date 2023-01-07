@@ -2,89 +2,91 @@
 
 namespace App\Controller;
 
+use App\Entity\Admin;
+use App\Form\ResetPasswordType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ResetPasswordController extends AbstractController
 {
-    #[Route('/reset/password', name: 'app_reset_password')]
-    public function index(): Response
+    #[Route('/resetpassword', name: 'app_forgot_password_request')]
+    public function request(Request $request, EntityManagerInterface $em, ResetPasswordHelper $resetPasswordHelper): Response
     {
+        $form = $this->createForm(ResetPasswordType::class);
+        $form->handleRequest($request);
+
+        // If the form is submitted and valid
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Get the user's email address
+            $email = $form->get('email')->getData();
+
+            // Check if a user with that email exists
+            $user = $em->getRepository(Admin::class)->findOneBy(['email' => $email]);
+            if ($user === null) {
+                // If no user was found, display an error message
+                $this->addFlash('danger', 'Aucun utilisateur avec cette adresse e-mail n\'a été trouvé.');
+
+                return $this->redirectToRoute('app_forgot_password_request');
+            }
+
+            // Generate a unique token and send it to the user by email
+            $resetPasswordHelper->sendResetEmail($user);
+
+            // Display a success message
+            $this->addFlash('success', 'Un e-mail de réinitialisation de mot de passe vous a été envoyé. Veuillez vérifier votre boîte de réception.');
+            return $this->redirectToRoute('app_forgot_password_request');
+        }
+
         return $this->render('reset_password/index.html.twig', [
-            'controller_name' => 'ResetPasswordController',
+            'form' => $form->createView()
         ]);
     }
 
-    public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository, \Swift_Mailer $mailer)
+
+
+     #[Route('/resetpassword/{token}', name:'app_reset_password')]
+
+    public function reset(Request $request, string $token, UserRepository $userRepository, ResetPasswordHelper $resetPasswordHelper): Response
     {
-        // Si le formulaire de demande de réinitialisation de mot de passe a été soumis, envoyez un e-mail à l'utilisateur
-        if ($request->isMethod('POST')) {
-            $email = $request->request->get('email');
-            $user = $userRepository->findOneByEmail($email);
-            if ($user) {
-                // Générez un jeton de réinitialisation de mot de passe et enregistrez-le en base de données
-                $user->setResetPasswordToken(bin2hex(random_bytes(32)));
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
+        // Check if the token is valid and get the corresponding user
+        $user = $resetPasswordHelper->validateTokenAndGetUser($token);
+        if ($user === null) {
+            // If the token is invalid, display an error message
+            $this->addFlash('danger', 'Ce lien de réinitialisation de mot de passe n\'est pas valide ou a expiré.');
 
-                // Envoyez un e-mail à l'utilisateur contenant un lien de réinitialisation de mot de passe
-                $message = (new \Swift_Message('Réinitialisation de votre mot de passe'))
-                    ->setFrom('noreply@example.com')
-                    ->setTo($user->getEmail())
-                    ->setBody(
-                        $this->renderView(
-                            'emails/reset_password.html.twig',
-                            ['token' => $user->getResetPasswordToken()]
-                        ),
-                        'text/html'
-                    );
-                $mailer->send($message);
-            }
-            // Affichez une page de confirmation indiquant que l'e-mail de réinitialisation de mot de passe a été envoyé
-            return $this->render('reset_password/check_email.html.twig');
-        } else {
-            // Affichez une erreur si aucun utilisateur n'a été trouvé avec l'adresse e-mail fournie
-            $error = 'Aucun compte ne correspond à cette adresse e-mail';
+            return $this->redirectToRoute('app_forgot_password_request');
         }
 
+        // Build the form
+        $form = $this->createForm(ResetPasswordFormType::class);
+        $form->handleRequest($request);
 
-    // Si le formulaire n'a pas été soumis ou si une erreur s'est produite, affichez le formulaire de demande de réinitialisation de mot de passe
-return $this->render('reset_password/request.html.twig', ['error' => $error ?? null]);
-}
+        // If the form is submitted and valid
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Get the new password and hash it
+            $plainPassword = $form->get('plainPassword')->getData();
+            $password = $this->get('security.password_encoder')->encodePassword($user, $plainPassword);
 
-public function resetPasswordConfirm(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository)
-{
-    // Vérifiez si un utilisateur possède un jeton de réinitialisation de mot de passe valide
-    $user = $userRepository->findOneByResetPasswordToken($token);
-    if (!$user) {
-        // Affichez une erreur si aucun utilisateur n'a été trouvé avec le jeton fourni
-        throw $this->createNotFoundException('Ce jeton de réinitialisation de mot de passe n\'est pas valide ou a expiré');
-    }
+            // Update the user's password
+            $user->setPassword($password);
+            $userRepository->save($user);
 
-    // Si le formulaire de réinitialisation de mot de passe a été soumis, mettez à jour le mot de passe de l'utilisateur
-    if ($request->isMethod('POST')) {
-        $password = $request->request->get('password');
-        $passwordConfirm = $request->request->get('password_confirm');
-        if ($password === $passwordConfirm) {
-            // Encodez le nouveau mot de passe et mettez-le à jour en base de données
-            $user->setPassword($passwordEncoder->encodePassword($user, $password));
-            $user->setResetPasswordToken(null);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            // Invalidate the token
+            $resetPasswordHelper->invalidateToken($token);
 
-            // Connectez l'utilisateur et redirigez-le vers la page d'accueil
-            return $this->redirectToRoute('homepage');
-        } else {
-            // Affichez une erreur si les mots de passe ne correspondent pas
-            $error = 'Les mots de passe ne correspondent pas';
+            // Display a success message
+            $this->addFlash('success', 'Votre mot de passe a été réinitialisé avec succès.');
+
+            // Redirect the user to the login page
+            return $this->redirectToRoute('app_login');
         }
+
+        return $this->render('reset_password/reset.html.twig', [
+            'resetForm' => $form->createView(),
+        ]);
     }
-
-    // Si le formulaire n'a pas été soumis ou si une erreur s'est produite, affichez le formulaire de réinitialisation de mot de passe
-    return $this->render('reset_password/confirm.html.twig', ['error' => $error ?? null]);
 }
-}
-
