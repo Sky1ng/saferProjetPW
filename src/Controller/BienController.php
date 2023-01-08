@@ -102,8 +102,8 @@ class BienController extends AbstractController
             //On envoie un mail à chaque contact qui correspond
             for($i = 0; $i < count($contactok); $i++){
                 $transport = (new Swift_SmtpTransport('smtp.ionos.fr', 587))
-                    ->setUsername('contact@mathiscapitaine.fr')
-                    ->setPassword('gyfqid-Bigwow-wufqo2')
+                    ->setUsername('mail')
+                    ->setPassword('mdp')
                 ;
 
                 $mailer = new Swift_Mailer($transport);

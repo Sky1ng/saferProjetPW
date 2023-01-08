@@ -122,8 +122,8 @@ class FavorisController extends AbstractController
 
 
         $transport = (new Swift_SmtpTransport('smtp.ionos.fr', 587))
-            ->setUsername('contact@mathiscapitaine.fr')
-            ->setPassword('gyfqid-Bigwow-wufqo2')
+            ->setUsername('mail')
+            ->setPassword('mdp')
         ;
 
         $mailer = new Swift_Mailer($transport);

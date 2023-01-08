@@ -44,7 +44,7 @@ class AddSQLFileCommand extends Command implements ContainerAwareInterface
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Récupérez le chemin vers votre fichier SQL
-        $sqlFilePath = 'config\data\sqlFile.sql';
+        $sqlFilePath = 'config/data/sqlFile.sql';
 
         // Récupérez les paramètres de connexion à votre base de données
         $entityManager = $this->getContainer()->get('doctrine')->getManager();

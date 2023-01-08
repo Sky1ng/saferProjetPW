@@ -46,7 +46,7 @@ class CarteController extends AbstractController
 
         //UTILISATION DE OPENCAGEDATA
 
-        $apiKey = '02de8520f3e341f7b9bdc11b3279f6d2';
+        $apiKey = 'API_KEY';
         $endpoint = 'https://api.opencagedata.com/geocode/v1/json';
 
         $client = HttpClient::create();

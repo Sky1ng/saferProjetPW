@@ -19,7 +19,11 @@
 		{{ bien.type }}</h2>
 	<section>
 		<div>
-			<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienDispoImage"/>
+			{% if bien.reference != null %}
+				<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+			{% else %}
+				<img src="/uploads/images/{{ bien.image }}" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+			{% endif %}
 			<div class="bienDispoDescription">
 				<h3>
 					Type de bien
