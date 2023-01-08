@@ -11,6 +11,7 @@ class ResetPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            //Pas encore fonctionnel
             ->add('email')
         ;
     }

@@ -16,6 +16,7 @@ class FavorisSentCrudController extends AbstractCrudController
     }
     public function configureActions(Actions $actions): Actions
     {
+        //Permet de modifier les actions possibles sur la page de favoris, comme ca on ne peux pas en éditer un ou créer
         return $actions
             // ...
             ->remove(Crud::PAGE_INDEX, Action::NEW)

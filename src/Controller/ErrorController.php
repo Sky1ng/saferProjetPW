@@ -11,10 +11,12 @@ class ErrorController extends AbstractController
     #[Route('/error', name: 'app_error')]
     public function index(): Response
     {
+        //Si l'url n'est pas bonne, on renvoie sur la page d'erreur avec la page en dessous
         return $this->render('error/index.html.twig', [
             'controller_name' => 'ErrorController',
         ]);
     }
+
     public function notFound()
     {
         return new Response(

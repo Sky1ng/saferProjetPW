@@ -18,10 +18,12 @@ class CompteController extends AbstractController
     #[Route('/compte', name: 'app_compte')]
     public function index(Security $security, EntityManagerInterface $em): Response
     {
+        //Récupération des infos de l'utilisateur connecté
         $user = $security->getUser();
         $role = $user->getRoles();
         $userId = $user->getId();
 
+        //Récupération des favoris de l'utilisateur connecté
         $favoris = $em->getRepository(FavorisSent::class)->findBy(['admin' => $userId]);
 
         return $this->render('compte/index.html.twig', [
@@ -36,18 +38,21 @@ class CompteController extends AbstractController
     public function edit(Security $security,Request $request,EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
 
+        //Récupération des infos de l'utilisateur connecté
         $user = $security->getUser();
         $favoris = $entityManager->getRepository(FavorisSent::class)->findBy(['admin' => $user->getId()]);
 
+        //Création du formulaire
         $form = $this->createForm(AdminType::class, $user);
         $form->handleRequest($request);
+        //Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
+            //Encodage du mot de passe
             $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
             // Mise à jour des informations de l'utilisateur
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', 'Votre compte a bien été mis à jour');
-            $user->setUsable(true);
 
             return $this->redirectToRoute('app_compte');
         }

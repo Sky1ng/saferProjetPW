@@ -25,8 +25,11 @@ class HomeController extends AbstractController
     {
         //Trois biens de façon aléatoire
         $em = $this->doctrine->getManager();
+        //On récupère les biens de la bdd
         $biens = $em->getRepository(Bien::class)->findAll();
+        //On mélange les biens
         shuffle($biens);
+        //On récupère les 3 premiers biens
         $randomBiens = array_slice($biens, 0, 3);
 
 

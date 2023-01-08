@@ -6,6 +6,10 @@
 	<link rel="stylesheet" href="{{ asset('style/bien.css') }}"/>
 {% endblock %}
 
+{% block javascripts %}
+	<script src="{{ asset('js/bien.js') }}"></script>
+{% endblock %}
+
 {% block title %}Hello FavorisController!
 {% endblock %}
 
@@ -40,8 +44,11 @@
 				<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
 					<div class="contenaire">
 						<div class="bien">
-							<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
-							<a href="{{ path('app_admin_removeById', {id: bien.id}) }}" class="favorite-button">
+							{% if bien.reference != null %}
+								<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+							{% else %}
+								<img src="/uploads/images/{{ bien.image }}" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+							{% endif %}							<a href="{{ path('app_admin_removeById', {id: bien.id}) }}" class="favorite-button">
 								<img src="/images/logo/croix.png" alt="Bouton favoris" class="favorite-button__image"/>
 							</a>
 							<div class="bienInfos">

@@ -18,11 +18,14 @@ class CarteController extends AbstractController
 
         $locations = [];
 
+        //On récupère tous les biens
         $code = $em->getRepository(Bien::class)->findAll();
         $codesPostaux = [];
+        //On récupère tous les codes postaux
         for ($i = 0; $i < count($code); $i++) {
             $codesPostaux[] = $code[$i]->getLocalisation();
         }
+        //Pour chaque code postal on récupère les coordonnées et on les stocks dans locations
         foreach ($codesPostaux as $codePostal) {
             $location = $this->getCoordinates($codePostal);
             $latitude = $location['lat'];
@@ -32,7 +35,6 @@ class CarteController extends AbstractController
                 'lat' => $latitude,
                 'lon' => $longitude,
             ];
-            // Get lat and long by addres
         }
 
         return $this->render('carte/carte.html.twig', [
@@ -41,6 +43,9 @@ class CarteController extends AbstractController
     }
     public function getCoordinates(string $address)
     {
+
+        //UTILISATION DE OPENCAGEDATA
+
         $apiKey = '02de8520f3e341f7b9bdc11b3279f6d2';
         $endpoint = 'https://api.opencagedata.com/geocode/v1/json';
 

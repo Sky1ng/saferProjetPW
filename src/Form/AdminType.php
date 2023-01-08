@@ -13,6 +13,7 @@ class AdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            //Ajout des champs voulu
             ->add('email')
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe actuel',

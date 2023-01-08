@@ -25,10 +25,14 @@ class BienDisponibleController extends AbstractController
 
         //Trois biens de façon aléatoire
         $em = $this->doctrine->getManager();
+        //On récupère les biens de la bdd
         $biens = $em->getRepository(Bien::class)->findAll();
+        //On mélange les biens
         shuffle($biens);
+        //On récupère les 3 premiers biens
         $randomBiens = array_slice($biens, 0, 3);
 
+        //On récupère le bien correspondant à l'id
         $bien = $em->getRepository(Bien::class)->findBy(['id' => $id]);
         return $this->render('bien_disponible/index.html.twig', [
             'controller_name' => 'BienDisponibleController',

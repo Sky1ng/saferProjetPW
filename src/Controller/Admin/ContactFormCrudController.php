@@ -17,6 +17,7 @@ class ContactFormCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        //Permet de modifier les actions possibles sur la page d'administration
         return $actions
             // ...
             ->remove(Crud::PAGE_INDEX, Action::NEW)

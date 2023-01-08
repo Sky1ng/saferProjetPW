@@ -19,12 +19,14 @@ class RegistrationController extends AbstractController
     {
         $user = new Admin();
 
+        //Création du formulaire
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+        //Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // encode the plain password
+            // Encodage du mot de passe
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -33,7 +35,7 @@ class RegistrationController extends AbstractController
             );
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
+            // Redirection vers la page de connexion
 
             return $this->redirectToRoute('app_login');
         }

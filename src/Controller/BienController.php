@@ -22,10 +22,10 @@ class BienController extends AbstractController
     #[Route('/', name: 'app_bien_index', methods: ['GET'])]
     public function index(BienRepository $bienRepository): Response
     {
-        $contactok = [];
+        //On affiche tous les biens de la base de données
         return $this->render('bien/index.html.twig', [
             'biens' => $bienRepository->findAll(),
-            'contact' => $contactok
+            'contact' => $contactok = []
 
         ]);
     }
@@ -33,16 +33,21 @@ class BienController extends AbstractController
     #[Route('/new', name: 'app_bien_new', methods: ['GET', 'POST'])]
     public function new(Request $request, BienRepository $bienRepository, EntityManagerInterface $em): Response
     {
+
+        //On crée un nouveau bien
         $contactok = [];
         $bien = new Bien();
         $form = $this->createForm(BienType::class, $bien);
         $form->handleRequest($request);
 
+        //Si le formulaire est envoyé et valide
         if ($form->isSubmitted() && $form->isValid()) {
             $bienRepository->save($bien, true);
 
-            //TODO: faire le mail automatique si le bien est validé
+            //On récupère tous les formulaires de la base de données
             $contact = $em->getRepository(ContactForm::class)->findAll();
+
+            //On vérifie un par un si ils correspondent en terme de prix et de surface
             for ($i = 0; $i < count($contact); $i++) {
                 $prix = $contact[$i]->getPrix();
                 $surface = $contact[$i]->getSurface();
@@ -82,16 +87,19 @@ class BienController extends AbstractController
                 }
 
                 if($prixb && $surfaceb){
-                    echo "ok";
                     array_push($contactok, $contact[$i]);
                 }
+                //Si ils ont surface + prix en commun avec le nouveau bien les deux boolean sont true, alors on créer un tableau avec les contacts qui correspondent
             }
+
+            //mise en page du mail
             $html = '<html><head><title>Un nouveau bien est arrivé</title></head><body>';
             $html .= '<p>Un nouveau bien est arrivé sur le site, il correspond à vos critères de recherche</p>';
             $html .= '<p>Vous pouvez le consulter en cliquant sur le lien ci-dessous</p>';
             $html .= '<a href="http://localhost:8000/bien/' . $bien->getId() . '">Lien vers le bien</a>';
             $html .= '</body></html>';
 
+            //On envoie un mail à chaque contact qui correspond
             for($i = 0; $i < count($contactok); $i++){
                 $transport = (new Swift_SmtpTransport('smtp.ionos.fr', 587))
                     ->setUsername('contact@mathiscapitaine.fr')
@@ -128,6 +136,7 @@ class BienController extends AbstractController
     #[Route('/{id}', name: 'app_bien_show', methods: ['GET'])]
     public function show(Bien $bien): Response
     {
+        //On affiche un bien en particulier
         return $this->render('bien/show.html.twig', [
             'bien' => $bien,
         ]);

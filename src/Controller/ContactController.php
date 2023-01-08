@@ -22,12 +22,11 @@ class ContactController extends AbstractController
     public function index(Request $request, FormFactoryInterface $factory, EntityManagerInterface $entityManager): Response
     {
 
-
-
-
         $categorie=[];
+        //Récupération des catégories
         $br=$entityManager->getRepository(Categorie::class);
         $categorie=$br->findAll();
+        //Création du formulaire
         $contact = new ContactForm();
         $form = $this->createForm(ContactFormType::class, $contact);
 
@@ -35,8 +34,9 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
 
 
-
+        //Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()){
+            //Enregistrement du formulaire
             $entityManager->persist($contact);
             $entityManager->flush();
             $this->addFlash('success', 'Votre message a bien été envoyé');

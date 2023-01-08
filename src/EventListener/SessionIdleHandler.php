@@ -12,12 +12,14 @@ class SessionIdleHandler
     protected $session;
     protected $maxIdleTime;
 
+    //Permet de récupérer le temps d'inactivité de la session
     public function __construct(TokenStorageInterface $tokenStorage, $maxIdleTime = 0)
     {
         $this->tokenStorage = $tokenStorage;
         $this->maxIdleTime = $maxIdleTime;
     }
 
+    //Permet de récupérer le temps d'inactivité de la session
     public function onInteractiveLogin(InteractiveLoginEvent $event)
     {
         $this->session = $event->getRequest()->getSession();
@@ -25,6 +27,7 @@ class SessionIdleHandler
         $this->session->set('last_activity', time());
     }
 
+    //Permet de déconnecter l'utilisateur si il est inactif
     public function onKernelRequest(RequestEvent $event)
     {
         if ($this->maxIdleTime > 0) {
