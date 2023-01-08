@@ -21,7 +21,7 @@
 </style>
 {% set loc = []%}
 {% set bie = []%}
-{% if depart is defined%}
+{% if depart is not empty%}
   {% for i in 0..depart|length-1 %}
     {% set loc = loc|merge([depart[i]['localisation']]) %}
     {% set bie = bie|merge([depart[i]['titre']]) %}
@@ -34,12 +34,14 @@
     <table class="mx-auto">
     <h2 class="text-center">Bien favoris par département</h2>
     <tr><th>Localisation</th><th>Bien</th></tr>
+    {% if depart is not empty%}
       {% for i in 0..loc|length-1 %}
       <tr>
         <td>{{loc[i]}}</td>
         <td>{{bie[i]}}</td>
       </tr>
       {% endfor %}
+    {% endif %}
     </table>
     {# 
 
