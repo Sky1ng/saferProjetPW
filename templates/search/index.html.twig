@@ -5,6 +5,9 @@
 	{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('style/bien.css') }}"/>
 {% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('js/bien.js') }}"></script>
+{% endblock %}
 {% block body %}
 	<style>
 		.example-wrapper {
@@ -23,7 +26,7 @@
 		<h1>
 			Recherche efficace
 		</h1>
-		<br>
+		<hr>
 		<h2>Recherche par mot</h2>
 		<p>Ce type de recherche permet de trouver des biens en fonction de votre mot</p>
 		{{ form_start(form) }}
@@ -70,9 +73,8 @@
 		</div>
 
 		<div class="form-group">
-			<label for="exampleTextarea" class="form-label mt-4">Example textarea</label>
+			<label for="exampleTextarea" class="form-label mt-4">Mots clés dans la description</label>
 			<fieldset disabled="">
-
 				{{ form_widget(form2.keyword,{'attr': {'class': 'form-control', 'placeholder': 'Des mots pour la recherche'}}) }}
 			</fieldset>
 		</div>
