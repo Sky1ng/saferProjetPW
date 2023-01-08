@@ -39,7 +39,7 @@
 					<div class="menu">
 						{{ knp_menu_render(category_menu(), {'currentClass': 'active', 'allow_safe_labels': true}) }}
 					</div>
-					<li><a href="{{ path('app_home') }}">Accueil</a></li>
+					<li><a href="{{ path('app_bien_all') }}">Tous les biens</a></li>
 						<!-- L'utilisateur est connecté -->
 						{% if is_granted('ROLE_USER') %}
 							<!-- L'utilisateur est un administrateur -->
@@ -52,6 +52,7 @@
 							</li>
 							<!-- L'utilisateur n'est pas un administrateur -->
 						{% endif %}
+
 					{% if is_granted('ROLE_ADMIN') %}
 						<li class="buttonAdmin">
 							<a href="{{ path('admin') }}">Admin</a>
@@ -84,8 +85,17 @@
 		</header>
 	</body>
 	<body>
+	{%  if app.user %}
+
+	{% if app.user.usable == true %}
+		<div class="alert alert-danger" role="alert">
+			Votre compte n'est pas encore activé, veuillez absolument changer votre mot de passe <a href="{{ path('app_compte_edit') }}"> ici </a>
+		</div>
+	{% endif %}
+	{% endif %}
 	<br>
 	<br>
+
 		{% block body %}{% endblock %}
 
 	</body>

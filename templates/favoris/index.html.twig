@@ -22,13 +22,19 @@
 			padding: 2px 6px;
 		}
 	</style>
+
+{% for message in app.flashes('success') %}
+	<div class="alert alert-success">
+		{{ message }}
+	</div>
+	{% endfor %}
 	<h2>
 		Vos favoris de votre session
 	</h2>
 	<br>
 	<div class="nosBiens">
 		{% if biens == [] %}
-			<h3>Vous n'avez ajouter encore aucun favoris durant votre navigation</h3>
+			<h3>Vous n'avez ajouté encore aucun favoris durant votre navigation</h3>
 		{% else %}
 		{% for bien in biens %}
 			<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
@@ -84,7 +90,7 @@
 	<br>
 	<div class="nosBiens">
 		{% if favoris == [] %}
-		<h3>Vous vous n'êtes pas envoyer de favoris</h3>
+		<h3>Vous vous n'êtes pas envoyé de favoris</h3>
 		{% else %}
 		{% for bien in favoris %}
 			<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">

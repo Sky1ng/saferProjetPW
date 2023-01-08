@@ -16,7 +16,11 @@
         {% for bien in biens %}
             <a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
                 <div class="bien">
+                    {% if bien.reference != null %}
                     <img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+                    {% else %}
+                    <img src="/uploads/images/{{ bien.image }}" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+                   {% endif %}
                     <a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
                         <img src="/images/logo/favicon.png" alt="Bouton favoris" class="favorite-button__image"/>
                     </a>

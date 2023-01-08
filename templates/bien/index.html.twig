@@ -44,4 +44,10 @@
     </table>
 
     <a href="{{ path('app_bien_new') }}">Create new</a>
+
+    {% for contac in contact %}
+        <p>Mail envoyé au contact id = </p>
+    <p>{{ contac.id }}</p>
+    {% endfor %}
+
 {% endblock %}

@@ -6,3 +6,8 @@ controllers:
 app_logout:
     path: /logout
     methods: GET
+error_404:
+    path: /{path}
+    controller: App\Controller\ErrorController::notFound
+    requirements:
+        path: .*
