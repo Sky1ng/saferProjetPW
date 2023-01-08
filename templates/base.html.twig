@@ -31,6 +31,11 @@
 			</a>
 			<nav>
 				<ul>
+					{% if not is_granted('ROLE_ADMIN') %}
+
+					<button class="buttonBiens highlight">Nos biens</button>
+					{% endif %}
+					
 					<li>
 						<a href="{{ path('app_bien_all') }}" class="highlight">Tous les biens</a>
 					</li>
@@ -43,7 +48,6 @@
 
 					{% endif %}
 					{% if not is_granted('ROLE_ADMIN') %}
-						<button class="buttonBiens highlight">Nos biens</button>
 						<div class="menu">
 							{{ knp_menu_render(category_menu(), {'currentClass': 'active', 'allow_safe_labels': true}) }}
 						</div>

@@ -12,6 +12,7 @@ class QuickSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            //permet de faire une recherche rapide
             ->add('field_name',SearchType::class)
         ;
     }

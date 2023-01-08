@@ -17,6 +17,7 @@ class ContactFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        //Créations des "choices" sous forme de tableau pour le formulaire
         $priceRanges = [
             'En dessous de 1000€' => '1000',
             'Entre 1000€ et 5000€' => '1000-5000',
@@ -133,6 +134,7 @@ class ContactFormType extends AbstractType
         ];
 
         $builder
+            //Ajout des champs du formulaire avec des attributs et des "choices"
             ->add('email', EmailType::class, ['attr' => ['placeholder' => 'Email']])
             ->add('prix', ChoiceType::class, [
                 'choices' => $priceRanges,

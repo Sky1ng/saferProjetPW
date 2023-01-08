@@ -23,7 +23,8 @@ class StatistiqueController extends AbstractController
         
         
         $rsm = new ResultSetMapping($em);
-        
+
+
         $rsm->addScalarResult('id_categorie_id', 'id_categorie_id');
         $rsm->addScalarResult('nb', 'nb');
         $rsm->addScalarResult('nom', 'nom');

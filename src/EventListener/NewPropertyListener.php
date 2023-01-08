@@ -12,6 +12,14 @@ class NewPropertyListener implements EventSubscriberInterface
 {
     private $mailer;
 
+    /*
+     *
+     * le concept était d'écouter chaque enregistrement pour envoyer un mail au personne qui avait
+     * rempli un formulaire contact
+     * Et de hasher le mdp lorsque l'admin modifie
+     */
+
+
     public function __construct(Swift_Mailer $mailer)
     {
         dump('NewPropertyListener');

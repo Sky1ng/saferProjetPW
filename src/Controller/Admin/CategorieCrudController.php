@@ -19,6 +19,7 @@ class CategorieCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        //Permet de créer le formulaire d'ajout d'une catégorie à notre volontée
         return [
             IdField::new('id')->hideOnForm(),
             CollectionField::new('Biens')->hideOnForm(),

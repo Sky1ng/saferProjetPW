@@ -38,6 +38,7 @@ class AdminCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        //Permet de créer le formulaire avec les champs correspondants
         return [
             FormField::addPanel('Création d\'un utilisateur')->setIcon('fa fa-user'),
             IdField::new('id')->hideOnForm(),

@@ -25,18 +25,20 @@ class FavorisController extends AbstractController
     #[Route('/', name: 'app_favoris_index', methods: ['GET'])]
     public function index(Security $security,SessionInterface $session,EntityManagerInterface $em): Response
     {
-
+        //Récupération des biens favoris de l'utilisateur connecté par la session
         $biens = $em->getRepository(Bien::class)->findBy(['id' => $session->get('favoris')]);
-
 
 
         $favoris = [];
         $idbiens = [];
         if($security->getUser() != null){
+            //Récupération des biens favoris de l'utilisateur connecté par la base de données
             $idFavoris = $em->getRepository(FavorisSent::class)->findBy(['admin' => $security->getUser()->getId()]);
+            //Pour chaque favoris de l'utilisateur connecté on récupère l'id du bien
             for($i = 0; $i < count($idFavoris); $i++){
                 $idbiens = array_merge($idbiens,$idFavoris[$i]->getBiens());
             }
+            //On récupère les biens correspondant aux id récupérés
             $favoris = $em->getRepository(Bien::class)->findBy(['id' => $idbiens]);
         }
         return $this->render('favoris/index.html.twig', [
