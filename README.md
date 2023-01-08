@@ -10,6 +10,8 @@ aller dans le fichier et faire `composer install`
 
 (peut-être la créer) 
 
+php bin/console doctrine:database:create
+
 `php bin/console doctrine:migrations:migrate`
 
 3) mettre toutes les catégories 
