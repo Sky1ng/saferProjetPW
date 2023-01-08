@@ -19,9 +19,7 @@ class StatistiqueController extends AbstractController
     #[Route('admin/statistique', name: 'app_statistique')]
     public function index(EntityManagerInterface $em, BienRepository $bienRepository ): Response
     {
-         
-        
-        
+  
         $rsm = new ResultSetMapping($em);
         
         $rsm->addScalarResult('id_categorie_id', 'id_categorie_id');
@@ -35,13 +33,6 @@ class StatistiqueController extends AbstractController
 
         $categ = $nativeQuery->getResult();
     
-
-        
-        
-      
-
-        
-        
         $results = $em->getRepository(Bien::class)->createQueryBuilder('b')
             ->select( 'COUNT(b) as nb')
             ->groupBy('b.id_categorie')
