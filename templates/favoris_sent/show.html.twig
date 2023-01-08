@@ -37,7 +37,7 @@
     {% for bien in biens %}
         <td>{{ bien.id }}</td>
         <td>{{ bien.reference }}</td>
-        <td>{{ bien.titre }}</td>
+        <td>{{ bien.titre|slice(0, 30)|raw }}...</td>
         <td>{{ bien.surface }}</td>
         <td>{{ bien.type }}</td>
         <td>{{ bien.prix }}</td>

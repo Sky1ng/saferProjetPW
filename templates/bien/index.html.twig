@@ -24,7 +24,7 @@
             <tr>
                 <td>{{ bien.id }}</td>
                 <td>{{ bien.reference }}</td>
-                <td>{{ bien.titre }}</td>
+                <td>{{ bien.titre|slice(0, 30)|raw }}...</td>
                 <td>{{ bien.description }}</td>
                 <td>{{ bien.localisation }}</td>
                 <td>{{ bien.surface }}</td>

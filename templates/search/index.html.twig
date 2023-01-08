@@ -1,115 +1,132 @@
 {% extends 'base.html.twig' %}
-{% block title %}Hello SearchController!{% endblock %}
+{% block title %}Hello SearchController!
+{% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('style/bien.css') }}"/>
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('style/bien.css') }}"/>
 {% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-<div class="example-wrapper">
-   <h1> Recherche efficace </h1>
-    <br>
-    <h2>Recherche par mot</h2>
-    <p>Ce type de recherche permet de trouver des biens en fonction de votre mot</p>
-    {{ form_start(form) }}
+	<div class="example-wrapper">
+		<h1>
+			Recherche efficace
+		</h1>
+		<br>
+		<h2>Recherche par mot</h2>
+		<p>Ce type de recherche permet de trouver des biens en fonction de votre mot</p>
+		{{ form_start(form) }}
 
-    <div class="form-group">
-        {{ form_widget(form.field_name, { 'attr': {'class': 'form-control', 'placeholder': 'Mot recherché'},'type':'text' }) }}
+		<div class="form-group">
+			{{ form_widget(form.field_name, { 'attr': {'class': 'form-control', 'placeholder': 'Mot recherché'},'type':'text' }) }}
 
-        {{ form_widget(form) }}
-    </div>
+			{{ form_widget(form) }}
+		</div>
 
-    {{ form_end(form) }}
+		{{ form_end(form) }}
 
-    <br>
-    <br>
-    <h2>Recherche par critère</h2>
-    {{ form_start(form2) }}
-    <fieldset disabled="">
-        {{ form_widget(form2.email, { 'attr': {'class': 'form-control', 'placeholder': 'Mail / pseudo '},'type':'email' }) }}
+		<br>
+		<br>
+		<h2>Recherche par critère</h2>
+		{{ form_start(form2) }}
+		<fieldset disabled="">
+			{{ form_widget(form2.email, { 'attr': {'class': 'form-control', 'placeholder': 'Mail / pseudo '},'type':'email' }) }}
 
-    </fieldset>
-    <br>
-    <div class="form-group w-50">
-        <label for="exampleSelect1" class="form-label mt-4">Prix souhaité : </label>
-        {{ form_widget(form2.prix,{'attr': {'class': 'form-control'}}) }}
-        <br>
-    </div>
-    <div class="form-group w-50">
-        <label for="exampleSelect1" class="form-label mt-4">Localisation souhaité : </label>
-        {{ form_widget(form2.localisation,{'attr': {'class': 'form-control'}}) }}
-        <br>
-    </div>
-    <div class="form-group w-50">
-        <label for="exampleSelect1" class="form-label mt-4">Catégorie souhaité : </label>
-        {{ form_widget(form2.categorie,{'attr': {'class': 'form-control'}}) }}
-        <br>
-    </div>
-    <div class="form-group w-50">
-        <label for="exampleSelect1" class="form-label mt-4">Surface souhaité :</label>
-        {{ form_widget(form2.surface,{'attr': {'class': 'form-control'}}) }}
-        <br>
-    </div>
+		</fieldset>
+		<br>
+		<div class="form-group w-50">
+			<label for="exampleSelect1" class="form-label mt-4">Prix souhaité :
+			</label>
+			{{ form_widget(form2.prix,{'attr': {'class': 'form-control'}}) }}
+			<br>
+		</div>
+		<div class="form-group w-50">
+			<label for="exampleSelect1" class="form-label mt-4">Localisation souhaité :
+			</label>
+			{{ form_widget(form2.localisation,{'attr': {'class': 'form-control'}}) }}
+			<br>
+		</div>
+		<div class="form-group w-50">
+			<label for="exampleSelect1" class="form-label mt-4">Catégorie souhaité :
+			</label>
+			{{ form_widget(form2.categorie,{'attr': {'class': 'form-control'}}) }}
+			<br>
+		</div>
+		<div class="form-group w-50">
+			<label for="exampleSelect1" class="form-label mt-4">Surface souhaité :</label>
+			{{ form_widget(form2.surface,{'attr': {'class': 'form-control'}}) }}
+			<br>
+		</div>
 
-    <div class="form-group">
-        <label for="exampleTextarea" class="form-label mt-4">Example textarea</label>
-        <fieldset disabled="">
+		<div class="form-group">
+			<label for="exampleTextarea" class="form-label mt-4">Example textarea</label>
+			<fieldset disabled="">
 
-        {{ form_widget(form2.keyword,{'attr': {'class': 'form-control', 'placeholder': 'Des mots pour la recherche'}}) }}
-        </fieldset>
-    </div>
-    <br>
-    <div style="display: none">
-        {{ form_widget(form2.Envoyer) }}
-    </div>
-    <button type="submit" class="btn btn-primary">Envoyer</button>
-    {{ form_end(form2) }}
-    <br>
-    <br>
-    <br>
-    <h2>Resultat : </h2>
-    <br>
-    {% for message in app.flashes('error') %}
-    <div class="alert alert-dismissible alert-primary">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <strong>Oups !</strong> {{ message }}</a>.
-    </div>
-{% endfor %}
-    <div class="nosBiens">
-        {% for bien in results %}
-            <a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
-                <div class="bien">
-                    <img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
-                    <a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
-                        <img src="/images/logo/favicon.png" alt="Bouton favoris" class="favorite-button__image"/>
-                    </a>
-                    <div class="bienInfos">
-                        <h3 class="bienTitre">
-                            {{ bien.titre }}
-                        </h3>
-                        <p class="bienPrix">
-                            {{ bien.prix }}
-                            €
-                        </p>
-                        <p class="bienCodePostal">
-                            {{ bien.localisation }}
-                        </p>
-                        <div>
-                            <img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
-                            <p class="bienType">
-                                {{ bien.idCategorie }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        {% endfor %}
-    </div>
-
+				{{ form_widget(form2.keyword,{'attr': {'class': 'form-control', 'placeholder': 'Des mots pour la recherche'}}) }}
+			</fieldset>
+		</div>
+		<br>
+		<div style="display: none">
+			{{ form_widget(form2.Envoyer) }}
+		</div>
+		<button type="submit" class="btn btn-primary">Envoyer</button>
+		{{ form_end(form2) }}
+		<br>
+		<br>
+		<br>
+		<h2>Resultat :
+		</h2>
+		<br>
+		{% for message in app.flashes('error') %}
+			<div class="alert alert-dismissible alert-primary">
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+				<strong>Oups !</strong>
+				{{ message }}</a>.
+		</div>
+	{% endfor %}
+	<div class="nosBiens">
+		{% for bien in results %}
+			<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
+				<div class="contenaire">
+					<div class="bien">
+						<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+						<a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
+							<img src="/images/logo/favicon.png" alt="Bouton favoris" class="favorite-button__image"/>
+						</a>
+						<div class="bienInfos">
+							<h3 class="bienTitre">
+								{{ bien.titre|slice(0, 30)|raw }}...
+							</h3>
+							<p class="bienPrix">
+								{{ bien.prix }}
+								€
+							</p>
+							<p class="bienCodePostal">
+								{{ bien.localisation }}
+							</p>
+							<div>
+								<img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
+								<p class="bienType">
+									{{ bien.idCategorie }}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
 
 
 {% endblock %}

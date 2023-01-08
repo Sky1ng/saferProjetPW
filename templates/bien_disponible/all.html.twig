@@ -1,65 +1,68 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('style/annonce.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('style/bien.css') }}"/>
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('style/annonce.css') }}"/>
+	<link rel="stylesheet" href="{{ asset('style/bien.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('js/bien.js') }}"></script>
 {% endblock %}
 
 
 {% block body %}
-    <br><br>
-
-    <h2>Tous les biens disponible par notre agence</h2>
-    <br><br>
-    <div class="nosBiens">
-        {% for bien in biens %}
-            <a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
-                <div class="bien">
-                    {% if bien.reference != null %}
-                    <img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
-                    {% else %}
-                    <img src="/uploads/images/{{ bien.image }}" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
-                   {% endif %}
-                    <a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
-                        <img src="/images/logo/favicon.png" alt="Bouton favoris" class="favorite-button__image"/>
-                    </a>
-                    <div class="bienInfos">
-                        <h3 class="bienTitre">
-                            {{ bien.titre }}
-                        </h3>
-                        <p class="bienPrix">
-                            {{ bien.prix }}
-                            €
-                        </p>
-                        <p class="bienCodePostal">
-                            {{ bien.localisation }}
-                        </p>
-                        <div>
-                            <img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
-                            <p class="bienType">
-                                {{ bien.idCategorie }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        {% endfor %}
-    </div>
-    <br><br>
-    <div>
-        <h2>
-            Vous ne trouvez pas le bien parfait à votre goût ?
-        </h2>
-        <br>
-        <form action="{{ path('app_contact') }}" method="post">
-            <button type="submit" class="buttonContact">Me contacter dès l'arrivée d'un bien</button>
-        </form>
-        <br>
-        <form action="{{ path('app_search') }}" method="post">
-            <button type="submit" class="buttonContact">Chercher un autre bien avec des critères</button>
-        </form>
-    </div>
+	<h2>Tous les biens disponible par notre agence</h2>
+	<div class="nosBiens">
+		{% for bien in biens %}
+			<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
+				<div class="contenaire">
+					<div class="bien">
+						{% if bien.reference != null %}
+							<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+						{% else %}
+							<img src="/uploads/images/{{ bien.image }}" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+						{% endif %}
+						<a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
+							<img src="/images/logo/favicon.png" alt="Bouton favoris" class="favorite-button__image"/>
+						</a>
+						<div class="bienInfos">
+							<h3 class="bienTitre">
+								{{ bien.titre|slice(0, 30)|raw }}...
+							</h3>
+							<p class="bienPrix">
+								{{ bien.prix }}
+								€
+							</p>
+							<p class="bienCodePostal">
+								{{ bien.localisation }}
+							</p>
+							<div>
+								<img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
+								<p class="bienType">
+									{{ bien.idCategorie }}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
+	<br><br>
+	<div>
+		<h2>
+			Vous ne trouvez pas le bien parfait à votre goût ?
+		</h2>
+		<br>
+		<form action="{{ path('app_contact') }}" method="post">
+			<button type="submit" class="buttonContact">Me contacter dès l'arrivée d'un bien</button>
+		</form>
+		<br>
+		<form action="{{ path('app_search') }}" method="post">
+			<button type="submit" class="buttonContact">Chercher un autre bien avec des critères</button>
+		</form>
+	</div>
 
 
 {% endblock %}

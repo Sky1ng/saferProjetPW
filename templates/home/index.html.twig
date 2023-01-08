@@ -1,81 +1,74 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-  {{ parent() }}
-  <link rel="stylesheet" href="{{ asset('style/home.css') }}" />
-  <link rel="stylesheet" href="{{ asset('style/bien.css') }}" />
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('style/home.css') }}"/>
+	<link rel="stylesheet" href="{{ asset('style/bien.css') }}"/>
 {% endblock %}
 
 {% block title %}
-  Safer
+	Safer
 {% endblock %}
 
 {% block body %}
 
-  <h1 style="text-align: center;font-size: 65px" >Bienvenue sur le site Safer</h1>
-  <hr>
-  <h2>
-    Notre sélection de biens
-  </h2>
-  <br>
-  <div class="nosBiens">
-    {% for bien in biens %}
-    <a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
-      <div class="bien">
-        <img src="/images/photo/{{ bien.reference }}.jpg"
-          alt="Photo du bien présenté"
-          onerror="this.src='/images/photo/noPhoto.jpg'"
-          class="bienImage" />
-        <a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
-          <img src="/images/logo/favicon.png"
-            alt="Bouton favoris"
-            class="favorite-button__image" />
-        </a>
-        <div class="bienInfos">
-          <h3 class="bienTitre">
-            {{ bien.titre }}
-          </h3>
-          <p class="bienPrix">
-            {{ bien.prix }} €
-          </p>
-          <p class="bienCodePostal">
-            {{ bien.localisation }}
-          </p>
-          <div>
-            <img src="/images/logo/{{ bien.idCategorie }}.png"
-              onerror="this.src='/images/photo/noPhoto.jpg'"
-              alt="{{ bien.idCategorie }}"
-              width="21"
-              height="21"
-              class="bienTypeImage" />
-            <p class="bienType">
-              {{ bien.idCategorie }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </a>
-    {% endfor %}
-  </div>
-  <section>
-    <div>
-      <h2>
-        L'entreprise SAFER
-      </h2>
-      <img src="/images/logo.png" />
-    </div>
-    <p style="font-style: normal">
-      SAFER (Société d'Aménagement Foncier et d'Etablissement Rural) est une
-      entreprise française qui a pour mission d'aménager, d'entretenir et de
-      gérer le foncier rural en France. Elle est une société anonyme dotée de
-      l'autorité de police administrative, agissant en France sous l'égide du
-      ministère de l'Agriculture, de l'Alimentation, de la Pêche et des Affaires
-      Rurales. SAFER s'adresse aux agriculteurs et aux propriétaires fonciers
-      qui souhaitent vendre, acheter, louer ou échanger du foncier rural. Elle
-      leur offre également des conseils et un accompagnement dans leurs
-      démarches afin de faciliter l'accès au foncier et de favoriser la
-      transmission et la modernisation de l'exploitation agricole. SAFER est
-      présente sur l'ensemble du territoire français.
-    </p>
-  </section>
+	<h1 style="text-align: center;font-size: 65px">Bienvenue sur le site Safer</h1>
+	<hr>
+	<h2>
+		Notre sélection de biens
+	</h2>
+	<br>
+	<div class="nosBiens">
+		{% for bien in biens %}
+			<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
+				<div class="contenaire">
+					<div class="bien">
+						<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+						<a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
+							<img src="/images/logo/favicon.png" alt="Bouton favoris" class="favorite-button__image"/>
+						</a>
+						<div class="bienInfos">
+							<h3 class="bienTitre">
+								{{ bien.titre|slice(0, 30)|raw }}...
+							</h3>
+							<p class="bienPrix">
+								{{ bien.prix }}
+								€
+							</p>
+							<p class="bienCodePostal">
+								{{ bien.localisation }}
+							</p>
+							<div>
+								<img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
+								<p class="bienType">
+									{{ bien.idCategorie }}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
+	<section>
+		<div>
+			<h2>
+				L'entreprise SAFER
+			</h2>
+			<img src="/images/logo.png"/>
+		</div>
+		<p style="font-style: normal">
+			SAFER (Société d'Aménagement Foncier et d'Etablissement Rural) est une
+			      entreprise française qui a pour mission d'aménager, d'entretenir et de
+			      gérer le foncier rural en France. Elle est une société anonyme dotée de
+			      l'autorité de police administrative, agissant en France sous l'égide du
+			      ministère de l'Agriculture, de l'Alimentation, de la Pêche et des Affaires
+			      Rurales. SAFER s'adresse aux agriculteurs et aux propriétaires fonciers
+			      qui souhaitent vendre, acheter, louer ou échanger du foncier rural. Elle
+			      leur offre également des conseils et un accompagnement dans leurs
+			      démarches afin de faciliter l'accès au foncier et de favoriser la
+			      transmission et la modernisation de l'exploitation agricole. SAFER est
+			      présente sur l'ensemble du territoire français.
+		</p>
+	</section>
 {% endblock %}

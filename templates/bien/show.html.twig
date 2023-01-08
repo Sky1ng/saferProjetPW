@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>Titre</th>
-                <td>{{ bien.titre }}</td>
+                <td>{{ bien.titre|slice(0, 30)|raw }}...</td>
             </tr>
             <tr>
                 <th>Description</th>

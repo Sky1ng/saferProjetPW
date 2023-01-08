@@ -10,7 +10,7 @@
 
 {% block body %}
 	<h2>
-		{{ bien.titre }}
+		{{ bien.titre}}
 		|
 		{{ bien.type }}</h2>
 	<section>
@@ -29,12 +29,12 @@
 					{{ bien.surface }}
 					m²
 				</p>
-                <h3>
-                    Localisation du bien
-                </h3>
-                <p>
-                    {{ bien.localisation }}
-                </p>
+				<h3>
+					Localisation du bien
+				</h3>
+				<p>
+					{{ bien.localisation }}
+				</p>
 				<h3>
 					Prix du bien
 				</h3>
@@ -65,27 +65,29 @@
 	<div class="nosBiens">
 		{% for bien in randomBiens %}
 			<a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
-				<div class="bien">
-					<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
-					<a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
-						<img src="/images/logo/favicon.png" alt="Bouton favoris" class="favorite-button__image"/>
-					</a>
-					<div class="bienInfos">
-						<h3 class="bienTitre">
-							{{ bien.titre }}
-						</h3>
-						<p class="bienPrix">
-							{{ bien.prix }}
-							€
-						</p>
-						<p class="bienCodePostal">
-							{{ bien.localisation }}
-						</p>
-						<div>
-							<img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
-							<p class="bienType">
-								{{ bien.type }}
+				<div class="contenaire">
+					<div class="bien">
+						<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+						<a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
+							<img src="/images/logo/favicon.png" alt="Bouton favoris" class="favorite-button__image"/>
+						</a>
+						<div class="bienInfos">
+							<h3 class="bienTitre">
+								{{ bien.titre|slice(0, 30)|raw }}...
+							</h3>
+							<p class="bienPrix">
+								{{ bien.prix }}
+								€
 							</p>
+							<p class="bienCodePostal">
+								{{ bien.localisation }}
+							</p>
+							<div>
+								<img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
+								<p class="bienType">
+									{{ bien.type }}
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
