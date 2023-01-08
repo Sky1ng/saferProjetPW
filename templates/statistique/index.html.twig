@@ -33,15 +33,19 @@
 
     <table class="mx-auto">
     <h2 class="text-center">Bien favoris par département</h2>
-    <tr><th>Département</th><th>Bien</th></tr>
     {% if depart is not empty%}
+    <tr><th>Département</th><th>Bien le plus envoyé</th></tr>
+    
       {% for i in 0..loc|length-1 %}
       <tr>
         <td>{{loc[i]|slice(0, 2)}}</td>
         <td>{{bie[i]}}</td>
       </tr>
       {% endfor %}
+    {% else %}
+      <p class="text-center font-weight-bold">Pas de favoris</p>
     {% endif %}
+
     </table>
     {# 
 
