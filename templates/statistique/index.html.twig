@@ -33,11 +33,11 @@
 
     <table class="mx-auto">
     <h2 class="text-center">Bien favoris par département</h2>
-    <tr><th>Localisation</th><th>Bien</th></tr>
+    <tr><th>Département</th><th>Bien</th></tr>
     {% if depart is not empty%}
       {% for i in 0..loc|length-1 %}
       <tr>
-        <td>{{loc[i]}}</td>
+        <td>{{loc[i]|slice(0, 2)}}</td>
         <td>{{bie[i]}}</td>
       </tr>
       {% endfor %}
@@ -74,8 +74,9 @@
 
 
 
-
-{% set cat = categ|json_encode %}
+{% if categ is not empty%}
+  {% set cat = categ|json_encode %}
+{% endif %}
 {% set bi = bie|json_encode %}
 
 {% set json = results|json_encode %}
@@ -107,26 +108,32 @@ select.addEventListener('change', function() {
 <body class="container">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <div class="row col-12">
+  {% if categ is not empty%}
   <h2 class="text-center">Nombre de biens favoris par catégorie aujourd'hui</h2>
+  
     <canvas id="myChart" class="col-6"></canvas>
-
-    <h2 class="text-center">Nombre de biens par catégorie </h2>
-    <canvas id="pieChart" class="col-6" ></canvas>
+  {% endif %}
+  
+    
+  <h2 class="text-center">Nombre de biens par catégorie </h2>
+    
+  <canvas id="pieChart" class="col-6" ></canvas>
+    
   </div>
 
 <script>
-var jscat = JSON.parse('{{ cat|raw }}');
-
+ {% if categ is not empty%}
+  const donnees = [];
+    var jscat = JSON.parse('{{ cat|raw }}');
+    jscat.forEach(function(c){
+    
+    donnees.push({label:c['nom'] , value: c['nb']},);
+  })
+{% endif %}
 var jsArray = JSON.parse('{{ json|raw }}');
 
 
 
-const donnees = [];
-
-jscat.forEach(function(c){
-    
-    donnees.push({label:c['nom'] , value: c['nb']},);
-  })
 
 
 
@@ -147,7 +154,7 @@ var options = {
     position: "bottom"
   }
 };
-
+ {% if categ is not empty%}
 var ctx = document.getElementById("myChart").getContext("2d");
 var chart = new Chart(ctx, {
   type: "pie",
@@ -161,6 +168,7 @@ var chart = new Chart(ctx, {
   },
   options: options
 });
+{% endif %}
 
 var options = {
   title: {
