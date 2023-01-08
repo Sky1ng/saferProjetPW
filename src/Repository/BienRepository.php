@@ -23,6 +23,8 @@ class BienRepository extends ServiceEntityRepository
 
     public function save(Bien $entity, bool $flush = false): void
     {
+        //TODO: envoyer  des mails à tlm
+
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {

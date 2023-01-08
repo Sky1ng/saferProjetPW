@@ -16,15 +16,15 @@ class CategorieCrudController extends AbstractCrudController
         return Categorie::class;
     }
 
-    /*
+
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
-            CollectionField::new('Biens'),
-            TextField::new('type'),
-            TextField::new('nom'),
+            CollectionField::new('Biens')->hideOnForm(),
+            TextField::new('type','Nom de la catégorie en base de donnée'),
+            TextField::new('nom','Nom de la catégorie affiché sur le site'),
         ];
     }
-    */
+
 }

@@ -3,15 +3,37 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div style="display: flex; flex-direction: column; justify-content: center; width: 35%; margin: auto">
+
+    <h1>S'enregistrer</h1>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {% if registrationForm.vars.errors|length > 0 %}
+            <div class="alert alert-danger">
+                {{ form_errors(form.username) }}
+                {{ form_errors(form.email) }}
+                {{ form_errors(form.password) }}
+                {{ form_errors(form.passwordConfirm) }}
+                {{ form_errors(form.invalid_message) }}
 
-        <button type="submit" class="btn">Register</button>
+            </div>
+        {% endif %}
+    <div class="form-group">
+        <div class="form-floating mb-3">
+            {{ form_row(registrationForm.email,{'attr': {'class': 'form-control', 'placeholder': 'name@example.com'},'type':'email'}) }}
+
+
+        </div>
+        <div class="form-floating">
+            {{ form_row(registrationForm.password,{'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'},'type':'password'}) }}
+
+        </div>
+    </div>
+<br>
+        {{ form_row(registrationForm.agreeTerms) }}
+<br>
+    <button type="submit" class="btn btn-primary">Créer un compte</button>
+        <br>
     {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

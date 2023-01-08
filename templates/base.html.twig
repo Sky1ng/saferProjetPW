@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.css">
+
+</head>
 <html>
 	<head>
 		<meta charset="UTF-8"/>
@@ -37,32 +42,67 @@
 					<div class="menu">
 						{{ knp_menu_render(category_menu(), {'currentClass': 'active', 'allow_safe_labels': true}) }}
 					</div>
-					{% if app.user %}
+					<li><a href="{{ path('app_bien_all') }}">Tous les biens</a></li>
 						<!-- L'utilisateur est connecté -->
-						{% if 'ROLE_ADMIN' in app.user.roles %}
+						{% if is_granted('ROLE_USER') %}
 							<!-- L'utilisateur est un administrateur -->
 							<li class="buttonAdmin">
-								<a href="{{ path('app_home') }}">Votre espace</a>
+								<a href="{{ path('app_compte') }}">Votre espace</a>
 							</li>
-						{% else %}
+
 							<li class="buttonClassic">
-								<a href="{{ path('app_home') }}">Vos Favoris</a>
+								<a href="{{ path('app_favoris_index') }}">Vos Favoris</a>
 							</li>
 							<!-- L'utilisateur n'est pas un administrateur -->
 						{% endif %}
+
+					{% if is_granted('ROLE_ADMIN') %}
+						<li class="buttonAdmin">
+							<a href="{{ path('admin') }}">Admin</a>
+						</li>
+
 					{% endif %}
+					{% if app.user %}
+
+						<li class="buttonClassic">
+							<a href="{{ path('app_logout') }}">Déconnexion</a>
+						</li>
+						<li>{{ app.user.email }}</li>
+					{% else %}
+						<li class="buttonClassic">
+							<a href="{{ path('app_login') }}">Connexion</a>
+						</li>
+						<li class="buttonClassic">
+							<a href="{{ path('app_register') }}">Créer un compte</a>
+						</li>
+					{% endif %}
+
+					<form action="{{ path('app_search_data') }}" class="d-flex" method="POST" >
+						<input class="form-control me-sm-2" name="recherche" id="recherche" type="search" placeholder="Chercher rapidement">
+						<input class="btn btn-secondary my-2 my-sm-0" type="submit" value="Chercher">
+					</form>
 				</ul>
+
 			</nav>
-			{% if app.user %}
-				<a href="{{ path('app_home') }}">Menu burger du profil a faire</a>
-			{% else %}
-				<form action="{{ path('app_login') }}" method="post">
-					<button type="submit" class="button">Se connecter</button>
-				</form>
-			{% endif %}
+
 		</header>
 	</body>
 	<body>
+	{%  if app.user %}
+
+	{% if app.user.usable == true %}
+		<div class="alert alert-danger" role="alert">
+			Votre compte n'est pas encore activé, veuillez absolument changer votre mot de passe <a href="{{ path('app_compte_edit') }}"> ici </a>
+		</div>
+	{% endif %}
+	{% endif %}
+	<br>
+	<br>
+
 		{% block body %}{% endblock %}
+
 	</body>
+	<footer>
+
+	</footer>
 </html>

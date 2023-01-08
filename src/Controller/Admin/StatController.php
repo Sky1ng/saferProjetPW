@@ -79,7 +79,7 @@ class StatController extends AbstractDashboardController
             MenuItem::linkTocrud(' Ajouter', 'fas fa-plus', Categorie::class)->setAction(Crud::PAGE_NEW),
             #MenuItem::linkTocrud(' Edit product', 'fas fa-edit', Bien::class)->setAction(Crud::PAGE_EDIT),
         ]);
-        yield MenuItem::section('Admin','fa fa-tags');
+        yield MenuItem::section('Utilisateur','fa fa-tags');
 
         yield MenuItem:: subMenu ('Actions', 'fas fa-bars')->setsubItems([
             MenuItem::linkTocrud('Voir', 'fas fa-eye', Admin::class)->setAction(Crud::PAGE_INDEX),
