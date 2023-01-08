@@ -31,6 +31,9 @@
 			<nav>
 				<ul>
 					<button class="buttonBiens">Nos biens</button>
+					<li class="buttonClassic">
+								<a href="{{ path('app_statistique') }}">Statistiques</a>
+							</li>
 					<div class="menu">
 						{{ knp_menu_render(category_menu(), {'currentClass': 'active', 'allow_safe_labels': true}) }}
 					</div>

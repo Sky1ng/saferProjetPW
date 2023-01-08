@@ -7,14 +7,133 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
+{% set loc = []%}
+{% set bie = []%}
+
+{% for i in 0..depart|length-1 %}
+  {% set loc = loc|merge([depart[i]['localisation']]) %}
+  {% set bie = bie|merge([depart[i]['titre']]) %}
+{% endfor %}
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Statistiques</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/elouanbarbier/GitHub/saferProjetPW/src/Controller/StatistiqueController.php'|file_link(0) }}">src/Controller/StatistiqueController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/elouanbarbier/GitHub/saferProjetPW/templates/statistique/index.html.twig'|file_link(0) }}">templates/statistique/index.html.twig</a></code></li>
-    </ul>
+    <table>
+    
+    <tr><th>Localisation</th><th>Bien</th></tr>
+      {% for i in 0..loc|length-1 %}
+      <tr>
+        <td>{{loc[i]}}</td>
+        <td>{{bie[i]}}</td>
+      </tr>
+      {% endfor %}
+</table>
+    {# 
+
+    <a href="{{ path('app_bien_disponibleById', {id: bien.id}) }}">
+				<div class="bien">
+					<img src="/images/photo/{{ bien.reference }}.jpg" alt="Photo du bien présenté" onerror="this.src='/images/photo/noPhoto.jpg'" class="bienImage"/>
+					<a href="{{ path('app_admin_new', {id: bien.id}) }}" class="favorite-button">
+						<img src="/images/logo/favicon.png" alt="Bouton favoris" class="favorite-button__image"/>
+					</a>
+					<div class="bienInfos">
+						<h3 class="bienTitre">
+							{{ bien.titre }}
+						</h3>
+						<p class="bienPrix">
+							{{ bien.prix }}
+							€
+						</p>
+						<p class="bienCodePostal">
+							{{ bien.localisation }}
+						</p>
+						<div>
+							<img src="/images/logo/{{ bien.idCategorie }}.png" onerror="this.src='/images/photo/noPhoto.jpg'" alt="{{ bien.idCategorie }}" width="21" height="21" class="bienTypeImage"/>
+							<p class="bienType">
+								{{ bien.idCategorie }}
+							</p>
+						</div>
+					</div>
+				</div>
+			</a> #}
+
+
+
+
+{% set cat = categ|json_encode %}
+
+{% set json = results|json_encode %}
+
+{# <select name="select" id="select_id">
+  {% for key,val in loc %}
+    <option value="{{ key }}" >{{ val }}</option>
+  {% endfor %}
+</select>
+<form><input type="hidden" name="js_value" id="js_value" value=""></form>
+
+<script>
+document.getElementById('js_value').value = bie[document.getElementById('select_id').value];
+
+</script>
+
+{{dump(js_value)}} #}
+
+
 </div>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<canvas id="myChart"></canvas>
+
+
+<script>
+var jscat = JSON.parse('{{ cat|raw }}');
+
+var jsArray = JSON.parse('{{ json|raw }}');
+
+
+
+const donnees = [];
+
+jscat.forEach(function(c){
+    
+    donnees.push({label:c['nom'] , value: c['nb']},);
+  })
+
+
+
+
+const data = [
+  { label: 'Terrain agricole', value: Object.values(jsArray[0])},
+  { label: 'Prairie', value: Object.values(jsArray[1])},
+  { label: 'Bois', value: Object.values(jsArray[2])},
+  { label: 'Batiments', value: Object.values(jsArray[3])},
+  { label: 'Exploitations', value: Object.values(jsArray[4])}];
+
+var options = {
+  title: {
+    display: true,
+    text: "Nombre de biens envoyés en favoris par catégorie aujourd'hui"
+  },
+  legend: {
+    position: "bottom"
+  }
+};
+
+var ctx = document.getElementById("myChart").getContext("2d");
+var chart = new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: donnees.map(function(item) { return item.label; }),
+    datasets: [{
+      label: "Nombre de biens envoyés en favoris par catégorie",
+      data: donnees.map(function(item) { return item.value; }),
+      backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"]
+    }]
+  },
+  options: options
+});
+
+
+</script>
+</body>
 {% endblock %}
