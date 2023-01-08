@@ -8,9 +8,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>
-			{% block title %}
-				Twig Problem !
-			{% endblock %}
+
 		</title>
 		<link
 		rel="icon" href="{{ asset('images/logo.png') }}" type="image/png"/>
@@ -88,14 +86,7 @@
 		</header>
 	</body>
 	<body>
-	{%  if app.user %}
 
-	{% if app.user.usable == true %}
-		<div class="alert alert-danger" role="alert">
-			Votre compte n'est pas encore activé, veuillez absolument changer votre mot de passe <a href="{{ path('app_compte_edit') }}"> ici </a>
-		</div>
-	{% endif %}
-	{% endif %}
 	<br>
 	<br>
 

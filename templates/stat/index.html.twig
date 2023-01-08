@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Statistiques jour après jour</h1>
+
+    <form method="post">
+        <label for="debut">Date de début :</label>
+        <input type="date" id="debut" name="debut">
+        <br>
+        <label for="fin">Date de fin :</label>
+        <input type="date" id="fin" name="fin">
+        <br>
+        <button type="submit">Filtrer</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Catégorie</th>
+            <th>Nombre de biens</th>
+        </tr>
+        {% for stat in statistiques %}
+            <tr>
+                <td>{{ stat.date|date }}</td>
+                <td>{{ stat.categorie.nom }}</td>
+                <td>{{ stat.nombreBiens }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

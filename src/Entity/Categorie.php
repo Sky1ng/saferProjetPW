@@ -28,6 +28,9 @@ class Categorie
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Stat::class)]
+    private Collection $stats;
+
     public function __toString()
     {
         return $this->type;
@@ -36,6 +39,7 @@ class Categorie
     public function __construct()
     {
         $this->biens = new ArrayCollection();
+        $this->stats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,6 +104,36 @@ class Categorie
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stat>
+     */
+    public function getStats(): Collection
+    {
+        return $this->stats;
+    }
+
+    public function addStat(Stat $stat): self
+    {
+        if (!$this->stats->contains($stat)) {
+            $this->stats->add($stat);
+            $stat->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStat(Stat $stat): self
+    {
+        if ($this->stats->removeElement($stat)) {
+            // set the owning side to null (unless already changed)
+            if ($stat->getCategorie() === $this) {
+                $stat->setCategorie(null);
+            }
+        }
 
         return $this;
     }
