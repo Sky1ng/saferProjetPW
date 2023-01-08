@@ -21,6 +21,8 @@ security:
                 check_path: app_login
             logout:
                 path: app_logout
+            login_throttling:
+                max_attempts: 3
         secured_area:
             form_login:
                 enable_csrf: true

@@ -58,7 +58,7 @@ DELIMITER ;
 - Les utilisateurs sont authentifiés via le composant de sécurité de Symfony
 - Les utilisateurs sont autorisés à accéder aux pages en fonction de leur rôle
 - Les utilisateurs sont déconnectés après une inactivité prolongée
-
+- Protection contre les attaques BrutForce
 
 
 ``bug``
