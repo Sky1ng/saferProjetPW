@@ -59,3 +59,16 @@ DELIMITER ;
 - Les utilisateurs sont autorisés à accéder aux pages en fonction de leur rôle
 - Les utilisateurs sont déconnectés après une inactivité prolongée
 
+
+
+``bug``
+Si il y a un bug du type
+
+
+Expected to find class "App\Service\MenuExtension" in file "/Users/elouanbarbier/GitHub/saferProjetPW/src/Service/MenuExtension.php" while importing services from resource "../src/", but it was not found! Check the namespace prefix used with the resource in /Users/elouanbarbier/GitHub/saferProjetPW/config/services.yaml (which is being imported from "/Users/elouanbarbier/GitHub/saferProjetPW/src/Kernel.php").
+
+Faire la commande :
+
+php bin/console cache:clear
+ou 
+composer install
