@@ -24,32 +24,12 @@ php bin/console doctrine:database:create
 
 5) vérifier si c'est bon 
 
+**Notation**
 
-**Pour les statistiques**
-Ajouter la fonction dans SQL
+Le fichier "grille_notation_avec_comentaire.pdf" permet de vous aidez dans la correction en associant chaque demande à la page ou commande
 
-DELIMITER $$
-
-CREATE FUNCTION get_quoted_values(longtext_field LONGTEXT) RETURNS VARCHAR(10000)
-BEGIN
-DECLARE start INT DEFAULT 1;
-DECLARE end INT DEFAULT 1;
-DECLARE result VARCHAR(10000) DEFAULT '';
-DECLARE value VARCHAR(10000);
-
-WHILE start > 0 DO
-SET start = LOCATE('"', longtext_field, end + 1);
-SET end = LOCATE('"', longtext_field, start + 1);
-SET value = SUBSTRING(longtext_field, start + 1, end - start - 1);
-IF start > 0 THEN
-SET result = CONCAT(result, value, ',');
-END IF;
-END WHILE;
-
-RETURN TRIM(TRAILING ',' FROM result);
-END$$
-
-DELIMITER ;
+vidéo : https://www.youtube.com/watch?v=kAiVHgKrAsQ
+(peut être réduire la vitesse si on parle trop rapidement...)
 
 **Sécurité**
 
@@ -61,14 +41,18 @@ DELIMITER ;
 - Protection contre les attaques BrutForce
 
 
-``bug``
+**bug**
 Si il y a un bug du type
 
-
+"
 Expected to find class "App\Service\MenuExtension" in file "/Users/elouanbarbier/GitHub/saferProjetPW/src/Service/MenuExtension.php" while importing services from resource "../src/", but it was not found! Check the namespace prefix used with the resource in /Users/elouanbarbier/GitHub/saferProjetPW/config/services.yaml (which is being imported from "/Users/elouanbarbier/GitHub/saferProjetPW/src/Kernel.php").
+"
 
 Faire la commande :
 
-php bin/console cache:clear
+``php bin/console cache:clear``
 ou 
-composer install
+``composer install``
+
+Le groupe :
+Elouan BARBIER | Yannis BEN BRAHIM | Francois QUINAOU
